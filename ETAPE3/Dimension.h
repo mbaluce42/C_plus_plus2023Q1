@@ -16,9 +16,9 @@ public:
     ~Dimension();
 
     // Getters et Setters
-    void setLargeur(const int larg);
+    void setLargeur(int larg) ;
     int getLargeur() const;
-    void setHauteur(const int haut);
+    void setHauteur(int haut) ;
     int getHauteur() const;
 
     static const Dimension VGA;

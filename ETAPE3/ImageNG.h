@@ -2,12 +2,13 @@
 #define IMAGENG_H
 #include "Dimension.h"
 
+
 class ImageNG {
 private:
     int id;
     char* nom;
     Dimension dimension;
-    int matrice[L_MAX][H_MAX];
+    int matrice[500][500];
     
 public:
     // Constructeurs
@@ -28,7 +29,7 @@ public:
     void setDimension(const Dimension& dimension); 
     const Dimension& getDimension() const;
 
-    void setPixel(const int x, const int y, const int val);
+    void setPixel(int x, int y, int val);
     int getPixel(const int x,const int y) const;
     void setBackground(int val);
 
@@ -38,7 +39,9 @@ public:
     
     void Affiche() const;
 
-    void Dessiner() const;
+    void Dessine() const;
+    void importFromFile(const char* fichier);
+    void exportToFile(const char* fichier,const char* format)const ;
 
 };
 

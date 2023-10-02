@@ -4,6 +4,9 @@
 #include <string>
 using namespace std;
 
+#include "MyQT.h"
+
+
 //const int ImageNG::L_MAX= 500;
 //const int ImageNG::H_MAX= 500;
 // Constructeur par défaut
@@ -105,7 +108,7 @@ const Dimension& ImageNG::getDimension() const
     return dimension;
 }
 
-void ImageNG::setPixel(const int x, const int y, const int val)
+void ImageNG::setPixel(int x, int y, int val)
 {
     if(x>=0 && x< dimension.getLargeur() && y>=0 && y< dimension.getHauteur() && (val<=255 && val>=0 ))
     {
@@ -130,6 +133,21 @@ void ImageNG::setBackground(int val)
             matrice[x][y]=val;
         }
     }
+}
+
+void ImageNG::Dessine() const
+{
+    MyQT::ViewImage(*this);
+}
+
+void ImageNG::importFromFile(const char* fichier)
+{
+    MyQT::ImportFromFile(*this,fichier);
+}
+
+void ImageNG::exportToFile(const char* fichier,const char* format) const 
+{
+    MyQT::ExportToFile(*this,fichier,format);
 }
 
 // Méthode pour afficher les caractéristiques de l'objet

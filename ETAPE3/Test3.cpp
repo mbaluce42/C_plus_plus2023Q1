@@ -28,8 +28,8 @@ int main(int argc,char* argv[])
     switch(choix)
     {
       case 1 : Essai1(); break;
-      //case 2 : Essai2(); break;
-      //case 3 : Essai3(); break;
+      case 2 : Essai2(); break;
+      case 3 : Essai3(); break;
       default : fini = true ; break;
     }
   }
@@ -50,8 +50,7 @@ int Menu()
   cout << " 4. Quitter" << endl << endl;
 
   int ch;
-  cout << "  Choix 
-  : ";
+  cout << "  Choix : ";
   cin >> ch; // Faites pas le biess !
   return ch;
 }

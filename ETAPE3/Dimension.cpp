@@ -55,12 +55,12 @@ int Dimension::getHauteur() const
     return hauteur;
 }
 
-void Dimension::setLargeur(const int larg) 
+void Dimension::setLargeur(int larg)
 {
     if(larg >0){this->largeur = larg; } 
 }
 
-void Dimension::setHauteur(const int haut) 
+void Dimension::setHauteur(int haut)
 {
     if(haut >0){this->hauteur= haut;}
 }
