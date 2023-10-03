@@ -14,7 +14,7 @@ ImageNG::ImageNG(): ImageNG(99,"XXX")
 {
     dimension.setHauteur(300);
     dimension.setLargeur(400);
-    setDimension(dimension);
+    //setDimension(dimension);
    /* setId(99);
     //nom=NULL;
     setNom("XXX");}*/
@@ -49,6 +49,7 @@ ImageNG::ImageNG(const ImageNG& img)
 {
     setNom(img.nom);
     setId(img.id);
+    setDimension(img.dimension);
 
     #ifdef DEBUG
    cout << "Je suis le constructeur de copie ImageNG" << endl<<endl;
@@ -99,8 +100,9 @@ void ImageNG::setNom(const char* nom)
 
 void ImageNG::setDimension(const Dimension& dimension)
 {
-    this->dimension.setHauteur(dimension.getHauteur());
-    this->dimension.setLargeur(dimension.getLargeur());
+    this->dimension= dimension;
+    /*this->dimension.setHauteur(dimension.getHauteur());
+    this->dimension.setLargeur(dimension.getLargeur());*/
 } 
 
 const Dimension& ImageNG::getDimension() const
@@ -119,7 +121,6 @@ void ImageNG::setPixel(int x, int y, int val)
 int ImageNG::getPixel(const int x,const int y) const
 {
     return matrice[x][y];
-
 }
 
 void ImageNG::setBackground(int val)

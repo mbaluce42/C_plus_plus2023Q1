@@ -4,11 +4,15 @@
 
 
 class ImageNG {
+public:
+    static const int L_MAX = 700;
+    static const int H_MAX = 700;
+
 private:
     int id;
     char* nom;
     Dimension dimension;
-    int matrice[500][500];
+    int matrice[L_MAX][H_MAX];
     
 public:
     // Constructeurs
@@ -32,10 +36,6 @@ public:
     void setPixel(int x, int y, int val);
     int getPixel(const int x,const int y) const;
     void setBackground(int val);
-
-    static const int L_MAX = 500;
-    static const int H_MAX = 500;
-
     
     void Affiche() const;
 
