@@ -44,6 +44,7 @@ ImageNG::ImageNG(const ImageNG& img)
 {
     setNom(img.nom);
     setId(img.id);
+    setDimension(img.dimension);
 
     #ifdef DEBUG
    cout << "Je suis le constructeur de copie ImageNG" << endl<<endl;
