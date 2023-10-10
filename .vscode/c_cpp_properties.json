@@ -3,7 +3,11 @@
         {
             "name": "Linux",
             "includePath": [
-                "${workspaceFolder}/**"
+                "${workspaceFolder}/**",
+                "/usr/include/qt5/QtGui",
+                "/usr/include/qt5",
+                "/usr/include/qt5/QtWidgets",
+                "/usr/include/qt5/QtCore"
             ],
             "defines": [],
             "compilerPath": "/usr/bin/gcc",

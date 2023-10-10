@@ -64,8 +64,8 @@ void Dimension::setHauteur(int haut)
 
 ostream& operator<<(ostream& os, const Dimension& dimension) 
 {
-    os << dimension.getLargeur();
-    os<< dimension.getHauteur();
+    os << "Largeur : "<<dimension.getLargeur() <<endl
+    <<"Hauteur : "<<dimension.getHauteur()<<endl;
     return os;
 }
 

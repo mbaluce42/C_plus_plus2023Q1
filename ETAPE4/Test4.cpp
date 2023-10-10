@@ -11,7 +11,7 @@ using namespace std;
 int  Menu();
 void Essai1();
 void Essai2();
-/*void Essai3();
+void Essai3();
 void Essai4();
 void Essai5();
 void Essai6();
@@ -19,7 +19,7 @@ void Essai7();
 void Essai8();
 void Essai9();
 void Essai10();
-void Essai11();*/
+void Essai11();
 
 int main(int argc,char* argv[])
 {
@@ -38,7 +38,7 @@ int main(int argc,char* argv[])
     {
       case 1 : Essai1(); break;
       case 2 : Essai2(); break;
-      /*case 3 : Essai3(); break;
+      case 3 : Essai3(); break;
       case 4 : Essai4(); break;
       case 5 : Essai5(); break;
       case 6 : Essai6(); break;
@@ -46,7 +46,7 @@ int main(int argc,char* argv[])
       case 8 : Essai8(); break;
       case 9 : Essai9(); break;
       case 10 : Essai10(); break;
-      case 11 : Essai11(); break;*/
+      case 11 : Essai11(); break;
       default : fini = true ; break;
     }
   }
@@ -180,7 +180,7 @@ void Essai5()
   i4 = 50 + i3;
   cout << "i4 = 50 + i3 = " << i4 << endl; i4.Dessine();
   cout << "Apres :" << endl;
-  cout << "i3 = " << i3 << endl; i3.Dessine(); 
+  cout << "i3 = " << i3 << endl; i3.Dessine();
 }
 
 //*******************************************************************************************************

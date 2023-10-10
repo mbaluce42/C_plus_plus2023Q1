@@ -14,7 +14,7 @@ ImageNG::ImageNG(): ImageNG(99,"XXX")
 {
     dimension.setHauteur(300);
     dimension.setLargeur(400);
-    delMatriceVal();
+    //delMatriceVal();
     //setDimension(dimension);
    /* setId(99);
     //nom=NULL;
@@ -38,7 +38,7 @@ ImageNG::ImageNG(int id, const char* nom, const Dimension& dimension)
     setId(id);
     setNom(nom);
     setDimension(dimension);
-    delMatriceVal();
+    //delMatriceVal();
 
     #ifdef DEBUG
   /*comme le contructeur par defaut sauf qu'il est parametre*/
@@ -47,11 +47,18 @@ ImageNG::ImageNG(int id, const char* nom, const Dimension& dimension)
 }
 
 // Constructeur de copie
-ImageNG::ImageNG(const ImageNG& img)
+ImageNG::ImageNG(const ImageNG& old)
 {
-    setNom(img.nom);
-    setId(img.id);
-    setDimension(img.dimension);
+    setNom(old.nom);
+    setId(old.id);
+    setDimension(old.dimension);
+    for(int x=0;x<=dimension.getLargeur(); x++)
+    {
+        for(int y=0; y<=dimension.getHauteur(); y++)
+        {
+            (*this).matrice[x][y]=old.matrice[x][y];
+        }
+    } 
 
     #ifdef DEBUG
    cout << "Je suis le constructeur de copie ImageNG" << endl<<endl;
@@ -222,16 +229,6 @@ void ImageNG::Affiche() const
     cout << "Largeur: " << dimension.getLargeur()<<endl;
 }
 
-void ImageNG::delMatriceVal()
-{
-    for(int x=0;x<=dimension.getLargeur(); x++)
-    {
-        for(int y=0; y<=dimension.getHauteur(); y++)
-        {
-            matrice[x][y]=0;
-        }
-    }  
-}
 
 const ImageNG& ImageNG::operator=(const ImageNG& old)
 {
@@ -240,7 +237,7 @@ const ImageNG& ImageNG::operator=(const ImageNG& old)
     setId(old.id);
     setNom(old.nom);
     setDimension(old.dimension);
-    delMatriceVal();
+    //delMatriceVal();
 
     for(int x=0;x<=dimension.getLargeur(); x++)
     {
@@ -280,9 +277,9 @@ ImageNG ImageNG::operator+(int valeur) const
     return newImage;
 }
 
-ImageNG ImageNG::operator+(int valeur,const ImageNG& i)
+ImageNG operator+(int valeur,const ImageNG& i)
 {
-    return (i+ valeur);
+    return i + valeur;
 }
 
 ImageNG ImageNG::operator-(int valeur) const 

@@ -19,7 +19,7 @@ public:
     ImageNG();
     ImageNG(int id, const char* nom);
     ImageNG(int id, const char* nom, const Dimension& dimension);
-    ImageNG(const ImageNG& img);
+    ImageNG(const ImageNG& old);
 
     ImageNG(const char* nomFichier);
 
@@ -43,7 +43,6 @@ public:
     float getContraste() const;
     
     void Affiche() const;
-    void delMatriceVal();
     
 
     void Dessine() const;
@@ -54,7 +53,7 @@ public:
     friend ostream& operator<<(ostream& os, const ImageNG& image);
     friend ostream& operator<<(ostream& os, const ImageNG& image);
     ImageNG operator+(int valeur) const;
-    ImageNG operator+(int valeur,const ImageNG& i);
+    friend ImageNG operator+(int valeur,const ImageNG& i);
     ImageNG operator-(int valeur) const;
     ImageNG& operator++(); // Pré-incrémentation
     ImageNG operator++(int); // Post-incrémentation
