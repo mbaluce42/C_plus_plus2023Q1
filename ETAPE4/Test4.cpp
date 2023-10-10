@@ -11,7 +11,7 @@ using namespace std;
 int  Menu();
 void Essai1();
 void Essai2();
-void Essai3();
+/*void Essai3();
 void Essai4();
 void Essai5();
 void Essai6();
@@ -19,7 +19,7 @@ void Essai7();
 void Essai8();
 void Essai9();
 void Essai10();
-void Essai11();
+void Essai11();*/
 
 int main(int argc,char* argv[])
 {
@@ -94,7 +94,7 @@ void Essai1()
   im.Affiche();
   cout << "Luminance = " << im.getLuminance() << endl;
   cout << "Minimum   = " << im.getMinimum() << endl;
-  cout << "Maximum   = " << im.getMaximum() << endl;
+  cout << "Maximum   = " << im.getMaximun() << endl;
   cout << "Contraste = " << im.getContraste() << endl;
   im.Dessine();
 }

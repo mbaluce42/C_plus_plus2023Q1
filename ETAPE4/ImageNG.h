@@ -38,7 +38,7 @@ public:
     int getPixel(const int x,const int y) const;
     void setBackground(int val);
     int getLuminance() const;
-    int getMinimun() const;
+    int getMinimum() const;
     int getMaximun() const;
     float getContraste() const;
     
@@ -52,7 +52,9 @@ public:
 
     const ImageNG& operator=(const ImageNG& old);
     friend ostream& operator<<(ostream& os, const ImageNG& image);
+    friend ostream& operator<<(ostream& os, const ImageNG& image);
     ImageNG operator+(int valeur) const;
+    ImageNG operator+(int valeur,const ImageNG& i);
     ImageNG operator-(int valeur) const;
     ImageNG& operator++(); // Pré-incrémentation
     ImageNG operator++(int); // Post-incrémentation
@@ -64,10 +66,6 @@ public:
     bool operator<(const ImageNG& other) const;
     bool operator>(const ImageNG& other) const;
     bool operator==(const ImageNG& other) const;
-
-
-
-
 
 };
 

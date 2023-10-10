@@ -1,7 +1,7 @@
 #ifndef MYQT_H
 #define MYQT_H
 
-#include "../ETAPE3/ImageNG.h"
+#include "ImageNG.h"
 /*
 #include "ImageRGB.h"
 #include "ImageB.h"

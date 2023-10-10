@@ -164,7 +164,7 @@ int ImageNG::getLuminance() const
     return (somme/nbrElem);
 }
 
-int ImageNG::getMinimun() const
+int ImageNG::getMinimum() const
 {
     int min=matrice[0][0];
     for(int x=0;x<=dimension.getLargeur(); x++)
@@ -193,7 +193,7 @@ int ImageNG::getMaximun() const
 float ImageNG::getContraste() const
 {
     int max= getMaximun();
-    int min= getMinimun();
+    int min= getMinimum();
 
     return ((max-min)/(max+min)); 
 }
@@ -248,14 +248,16 @@ const ImageNG& ImageNG::operator=(const ImageNG& old)
         {
             matrice[x][y]=old.matrice[x][y];
         }
-    }   
+    } 
+
+    return *this;
 }
 
 ostream& operator<<(ostream& os, const ImageNG& image) 
 {
     os << "Id : "<< image.getId()<<endl
     <<"Nom :" <<image.getNom()<<endl
-    << "Dimension: "<< image.getDimension()<<endl
+    << "Dimension: "<< endl<<"Hauteur: "<<image.getDimension().getHauteur()<<endl <<"Largeur: "<<image.getDimension().getLargeur() <<endl
     << "Luminance: "<< image.getLuminance()<<endl
     << "Contraste: "<< image.getContraste()<<endl;
     /*image.getMaximun;
@@ -276,6 +278,11 @@ ImageNG ImageNG::operator+(int valeur) const
         }
     }
     return newImage;
+}
+
+ImageNG ImageNG::operator+(int valeur,const ImageNG& i)
+{
+    return (i+ valeur);
 }
 
 ImageNG ImageNG::operator-(int valeur) const 

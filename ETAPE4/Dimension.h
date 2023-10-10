@@ -1,6 +1,12 @@
 #ifndef DIMENSION_H
 #define DIMENSION_H
 
+#include <iostream>
+#include <ostream>
+#include <cstring>
+#include <string>
+using namespace std;
+
 class Dimension {
 private:
     int hauteur;

@@ -1,8 +1,5 @@
 #include "Dimension.h"
-#include <iostream>
-#include <cstring>
-#include <string>
-using namespace std;
+
 
 const Dimension Dimension::VGA(640,480);
 const Dimension Dimension::HD(1280,720);
