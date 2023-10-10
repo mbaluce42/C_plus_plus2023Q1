@@ -6,6 +6,8 @@
 using namespace std;
 #include "ImageNG.h"
 
+#include "Dimension.h"
+
 int  Menu();
 void Essai1();
 void Essai2();
@@ -36,7 +38,7 @@ int main(int argc,char* argv[])
     {
       case 1 : Essai1(); break;
       case 2 : Essai2(); break;
-      case 3 : Essai3(); break;
+      /*case 3 : Essai3(); break;
       case 4 : Essai4(); break;
       case 5 : Essai5(); break;
       case 6 : Essai6(); break;
@@ -44,7 +46,7 @@ int main(int argc,char* argv[])
       case 8 : Essai8(); break;
       case 9 : Essai9(); break;
       case 10 : Essai10(); break;
-      case 11 : Essai11(); break;
+      case 11 : Essai11(); break;*/
       default : fini = true ; break;
     }
   }
