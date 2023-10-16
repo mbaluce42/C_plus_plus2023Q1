@@ -3,13 +3,11 @@
 #include "Image.h"
 
 
+
+
 class ImageNG : public Image
 {
-public:
-    static const int L_MAX = 700;
-    static const int H_MAX = 700;
-
-protected:
+private:
 
     int matrice[L_MAX][H_MAX];
     

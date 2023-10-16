@@ -4,7 +4,7 @@
 #include <string>
 using namespace std;
 
-#include "MyQT.h"
+
 
 
 
@@ -58,8 +58,7 @@ Image::Image(const char* nomFichier)
     setNom(nomFichier);
     dimension.setHauteur(300);
     dimension.setLargeur(400);
-    //setDimension(Dimension(dimension.getLargeur(), dimension.getHauteur())); 
-    MyQT::ImportFromFile(*this, nomFichier);
+   // MyQT::ImportFromFile(*this, nomFichier);
 }
 
 

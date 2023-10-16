@@ -1,0 +1,46 @@
+#ifndef COULEUR_H
+#define COULEUR_H
+
+
+class Couleur 
+{
+private:
+    int rouge;
+    int vert;
+    int bleu;
+
+public:
+    //coonstructeur
+    Couleur();
+    Couleur(const int r, const int v, const int b);
+
+    int getRouge()const ;
+    int getVert() const ;
+    int getBleu() const ;
+
+    void setRouge(const int r);
+    void setVert(const int v);
+    void setBleu(const int b) ;
+
+    friend ostream& operator<<(ostream& os, const Couleur& couleur) ;
+
+
+    static const Couleur ROUGE;
+    static const Couleur VERT;
+    static const Couleur BLEU;
+    static const Couleur BLANC;
+    static const Couleur NOIR;
+};
+
+
+
+#endif
+
+
+
+
+
+
+
+
+

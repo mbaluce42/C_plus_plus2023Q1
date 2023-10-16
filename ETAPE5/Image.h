@@ -1,11 +1,14 @@
-#ifndef IMAGENG_H
-#define IMAGENG_H
+#ifndef IMAGE_H
+#define IMAGE_H
 #include "Dimension.h"
 
 
 class Image 
 {
-
+    
+public:
+    static const int L_MAX = 700;
+    static const int H_MAX = 700;
 protected:
     int id;
     string nom;
