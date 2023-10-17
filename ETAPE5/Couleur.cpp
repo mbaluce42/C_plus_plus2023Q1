@@ -1,9 +1,5 @@
 #include "Couleur.h"
-#include <iostream>
-#include <cstring>
-#include <string>
 
-using namespace std;
 
 
 const Couleur Couleur::ROUGE(255, 0, 0);

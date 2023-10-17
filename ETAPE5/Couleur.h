@@ -1,6 +1,13 @@
 #ifndef COULEUR_H
 #define COULEUR_H
 
+#include <iostream>
+#include <cstring>
+#include <string>
+
+using namespace std;
+
+
 class Couleur 
 {
 private:

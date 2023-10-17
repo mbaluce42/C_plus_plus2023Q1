@@ -358,56 +358,54 @@ ImageNG ImageNG::operator-(const ImageNG& other) const
 bool ImageNG::operator<(const ImageNG& other) const 
 {
     ImageNG newImage(*this);
-    int L_Image=0, R_Image=0;
+    int temp=0;
 
     for (int x = 0; x < newImage.getDimension().getLargeur(); ++x) 
     {
         for (int y = 0; y < newImage.getDimension().getHauteur(); ++y) 
         {
-            L_Image += newImage.getPixel(x, y) ;
-            R_Image += other.getPixel(x, y);
-
+            if(newImage.getPixel(x, y) < other.getPixel(x, y) ){ temp=1;}
+            else{temp=0; break;}
         }
     }
 
-    if(L_Image < R_Image ){return true;}
-    else{return false;} 
+    if(temp==1){return true;}
+    else{return false;}
 }
 
 bool ImageNG::operator>(const ImageNG& other) const 
 {
     ImageNG newImage(*this);
-    int L_Image=0, R_Image=0;
+    int temp=0;
 
     for (int x = 0; x < newImage.getDimension().getLargeur(); ++x) 
     {
         for (int y = 0; y < newImage.getDimension().getHauteur(); ++y) 
         {
-            L_Image += newImage.getPixel(x, y) ;
-            R_Image += other.getPixel(x, y);
+            if(newImage.getPixel(x, y) > other.getPixel(x, y) ){ temp=1;}
+            else{temp=0; break;}
 
         }
     }
 
-    if(L_Image > R_Image ){return true;}
-    else{return false;} 
+    if(temp==1){return true;}
+    else{return false;}
 }
 
 bool ImageNG::operator==(const ImageNG& other) const {
     ImageNG newImage(*this);
-    int L_Image=0, R_Image=0;
+    int temp=0;
 
     for (int x = 0; x < newImage.getDimension().getLargeur(); ++x) 
     {
         for (int y = 0; y < newImage.getDimension().getHauteur(); ++y) 
         {
-            L_Image += newImage.getPixel(x, y) ;
-            R_Image += other.getPixel(x, y);
-
+            if(newImage.getPixel(x, y) == other.getPixel(x, y) ){ temp=1;}
+            else{temp=0; break;}
         }
     }
 
-    if(L_Image == R_Image ){return true;}
-    else{return false;} 
+    if(temp==1){return true;}
+    else{return false;}
     
 }
