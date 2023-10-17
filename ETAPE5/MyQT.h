@@ -4,8 +4,8 @@
 #include "ImageNG.h"
 
 #include "ImageRGB.h"
-/*#include "ImageB.h"
-*/
+#include "ImageB.h"
+
 
 class MyQT
 {
@@ -22,9 +22,9 @@ class MyQT
     static void ExportToFile(const ImageRGB & image, const char* fichier,const char* format);
 
     // Pour les ImageB
-    /*static void ViewImage(const ImageB & image);
+    static void ViewImage(const ImageB & image);
     static void ExportToFile(const ImageB & image, const char* fichier,const char* format);
-    */
+    
 };
 
 #endif

@@ -13,18 +13,18 @@ public:
     Couleur();
     Couleur(const int r, const int v, const int b);
     Couleur(const Couleur& c);
-
+    //Set et get
     int getRouge()const ;
     int getVert() const ;
     int getBleu() const ;
 
     void setRouge(const int r);
     void setVert(const int v);
-    void setBleu(const int b) ;
+    void setBleu(const int b);
 
     void Affiche() const;
 
-    friend ostream& operator<<(ostream& os, const Couleur& couleur) ;
+    friend ostream& operator<<(ostream& os, const Couleur& couleur);
 
 
     static const Couleur ROUGE;
@@ -33,8 +33,6 @@ public:
     static const Couleur BLANC;
     static const Couleur NOIR;
 };
-
-
 
 #endif
 
