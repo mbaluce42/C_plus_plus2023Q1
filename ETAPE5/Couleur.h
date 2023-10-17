@@ -1,7 +1,6 @@
 #ifndef COULEUR_H
 #define COULEUR_H
 
-
 class Couleur 
 {
 private:
@@ -13,6 +12,7 @@ public:
     //coonstructeur
     Couleur();
     Couleur(const int r, const int v, const int b);
+    Couleur(const Couleur& c);
 
     int getRouge()const ;
     int getVert() const ;
@@ -21,6 +21,8 @@ public:
     void setRouge(const int r);
     void setVert(const int v);
     void setBleu(const int b) ;
+
+    void Affiche() const;
 
     friend ostream& operator<<(ostream& os, const Couleur& couleur) ;
 

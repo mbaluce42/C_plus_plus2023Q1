@@ -157,10 +157,14 @@ void ImageNG::exportToFile(const char* fichier,const char* format) const
 // Méthode pour afficher les caractéristiques de l'objet
 void ImageNG::Affiche() const 
 {
-    cout << "ID : " << id <<endl;
-    cout << "Nom : " << nom <<endl;
-    cout << "Hauteur : " << dimension.getHauteur()<<endl;
-    cout << "Largeur: " << dimension.getLargeur()<<endl;
+    cout << "-Detail ImageNG: "<<endl
+    << "ID : " << id <<endl
+    << "Nom : " << nom <<endl
+    << "Dimension: "<< endl
+    << "Hauteur : " << dimension.getHauteur()<<endl
+    << "Largeur: " << dimension.getLargeur()<<endl
+    << "Luminance: "<< getLuminance()<<endl
+    << "Contraste: "<< getContraste()<<endl;
 }
 
 
@@ -171,7 +175,6 @@ const ImageNG& ImageNG::operator=(const ImageNG& old)
     setId(old.id);
     setNom(old.nom);
     setDimension(old.dimension);
-    //delMatriceVal();
 
     for(int x=0;x<=dimension.getLargeur(); x++)
     {
@@ -186,14 +189,14 @@ const ImageNG& ImageNG::operator=(const ImageNG& old)
 
 ostream& operator<<(ostream& os, const ImageNG& image) 
 {
-    os << "Id : "<< image.getId()<<endl
+    os << "-Detail ImageNG: "<<endl
+    << "Id : "<< image.getId()<<endl
     <<"Nom :" <<image.getNom()<<endl
-    << "Dimension: "<< endl<<"Hauteur: "<<image.getDimension().getHauteur()<<endl <<"Largeur: "<<image.getDimension().getLargeur() <<endl
+    << "Dimension: "<< endl
+    <<"Hauteur: "<<image.getDimension().getHauteur()<<endl <<"Largeur: "<<image.getDimension().getLargeur() <<endl
     << "Luminance: "<< image.getLuminance()<<endl
     << "Contraste: "<< image.getContraste()<<endl;
-    /*image.getMaximun;
-    image.getMinimun;
-    image.getPixel;*/
+
     return os;
 }
 

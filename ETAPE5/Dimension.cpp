@@ -64,7 +64,8 @@ void Dimension::setHauteur(int haut)
 
 ostream& operator<<(ostream& os, const Dimension& dimension) 
 {
-    os << "Largeur : "<<dimension.getLargeur() <<endl
+    os<< "Detail Dimension: "<<endl
+    << "Largeur : "<<dimension.getLargeur() <<endl
     <<"Hauteur : "<<dimension.getHauteur()<<endl;
     return os;
 }
@@ -106,6 +107,7 @@ bool Dimension::operator!=(const Dimension& other) const
 
 void Dimension::Affiche() const 
 {
-    cout << "Largeur : " << largeur<<endl;
-    cout << "Hauteur : " << hauteur<<endl;
+    cout<< "Detail Dimension: "<<endl
+    << "Largeur : " << largeur<<endl
+    << "Hauteur : " << hauteur<<endl;
 }

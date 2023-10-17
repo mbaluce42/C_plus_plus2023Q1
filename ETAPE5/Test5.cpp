@@ -7,7 +7,7 @@ using namespace std;
 
 #include "Couleur.h"
 #include "ImageRGB.h"
-#include "ImageB.h"
+//#include "ImageB.h"
 #include "ImageNG.h"
 
 int  Menu();
@@ -37,10 +37,10 @@ int main(int argc,char* argv[])
       case 1 : Essai1(); break;
       case 2 : Essai2(); break;
       case 3 : Essai3(); break;
-      case 4 : Essai4(); break;
+      /*case 4 : Essai4(); break;
       case 5 : Essai5(); break;
       case 6 : Essai6(); break;
-      case 7 : Essai7(); break;
+      case 7 : Essai7(); break;*/
       default : fini = true ; break;
     }
   }
@@ -162,7 +162,7 @@ void Essai3()
 //*************************************************************************************************
 //*** Tests de setBackground, setPixel, Dessine et constructeur de copie de ImageB **************** 
 //*************************************************************************************************
-void Essai4()
+/*void Essai4()
 {
   cout << endl << "(4) Tests de setBackground, setPixel, Dessine et constructeur de copie de ImageB **********" << endl;
   
@@ -187,12 +187,12 @@ void Essai4()
   cout << "Re-voici image1..." << endl;
   image1.Affiche();
   image1.Dessine();
-}
+}*/
 
 //*************************************************************************************************
 //*** Test de getPixel et exportToFile de ImageB ************************************************** 
 //*************************************************************************************************
-void Essai5()
+/*void Essai5()
 {
   cout << endl << "(5) Tests de getPixel et exportToFile de ImageB ********************************" << endl;
   
@@ -215,12 +215,12 @@ void Essai5()
   cout << "Exportation de l'image binaire vers le fichier disque.png......" << endl;
   image.Dessine();
   image.exportToFile("disque.png","PNG");
-}
+}*/
 
 //***********************************************************************************************
 //*** Tests de la virtualite ********************************************************************
 //***********************************************************************************************
-void Essai6()
+/*void Essai6()
 {
   srand((unsigned)time(NULL));
 
@@ -263,12 +263,12 @@ void Essai6()
   cout << "(6.3) Liberation memoire **************************************************************" << endl;
   for (int i=0 ; i<10 ; i++) delete image[i];  // Tout se passe-t-il comme vous voulez ?
   // Pour etre plus precis, quid des destructeurs et de la virtualite ?
-}
+}*/
 
 //***********************************************************************************************
 //*** Tests du downcasting et dynamic-cast ******************************************************
 //***********************************************************************************************
-void Essai7()
+/*void Essai7()
 {
   srand((unsigned)time(NULL));
 
@@ -326,5 +326,5 @@ void Essai7()
   cout << "(7.3) Liberation memoire ****************************************************************" << endl;
   for (int i=0 ; i<10 ; i++) delete image[i];
 }
-
+*/
 
