@@ -24,7 +24,7 @@ public:
     Image(const char* nomFichier);
 
     // Destructeur
-    ~Image();
+    virtual ~Image();
 
     // Getters et Setters
     void setId(int id);

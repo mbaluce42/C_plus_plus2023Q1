@@ -24,8 +24,8 @@ ImageRGB::ImageRGB(int id, const string& nom, const Dimension& dimension): Image
   /*comme le contructeur par defaut sauf qu'il est parametre*/
   cout << "Je suis le contructeur d'initialisation2 ImageRGB" << endl<<endl;
   #endif
-
 }
+
 
 ImageRGB::ImageRGB(const ImageRGB& old): Image(old)
 {
@@ -36,7 +36,6 @@ ImageRGB::ImageRGB(const ImageRGB& old): Image(old)
             (*this).matrice[x][y]=old.matrice[x][y];
         }
     } 
-
 }
 
 ImageRGB::ImageRGB(const char* nomFichier): Image(nomFichier)

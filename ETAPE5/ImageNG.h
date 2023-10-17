@@ -7,7 +7,7 @@
 
 class ImageNG : public Image
 {
-private:
+protected:
 
     int matrice[L_MAX][H_MAX];
     

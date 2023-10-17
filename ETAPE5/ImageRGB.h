@@ -6,7 +6,7 @@
 
 class ImageRGB : public Image 
 {
-private:
+protected:
 Couleur matrice[L_MAX][H_MAX];
 
 public:

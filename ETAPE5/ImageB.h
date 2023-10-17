@@ -10,7 +10,7 @@ public:
 static Couleur couleurTrue;
 static Couleur couleurFalse;
 
-private:
+protected:
 
 bool matrice[L_MAX][H_MAX];
 

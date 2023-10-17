@@ -1,12 +1,14 @@
 #include "ImageB.h"
 #include "MyQT.h"
 
+Couleur ImageB::couleurTrue(0,0,0);
+Couleur ImageB::couleurFalse(255,255,255);
+
 ImageB::ImageB()
 {
     #ifdef DEBUG
 	cout << "Je suis le constructeur par defaut ImageNG" << endl<<endl;
 	#endif
-
 }
 
 ImageB::ImageB(int id, const string& nom): Image()
@@ -15,7 +17,6 @@ ImageB::ImageB(int id, const string& nom): Image()
   /*comme le contructeur par defaut sauf qu'il est parametre*/
   cout << "Je suis le contructeur d'initialisation1 ImageRBG" << endl<<endl;
   #endif
-
 }
     
 ImageB::ImageB(int id, const string& nom, const Dimension& dimension): Image(id,nom,dimension)
@@ -24,7 +25,6 @@ ImageB::ImageB(int id, const string& nom, const Dimension& dimension): Image(id,
   /*comme le contructeur par defaut sauf qu'il est parametre*/
   cout << "Je suis le contructeur d'initialisation2 ImageB" << endl<<endl;
   #endif
-
 }
 
 ImageB::ImageB(const ImageB& old): Image(old)
@@ -36,7 +36,6 @@ ImageB::ImageB(const ImageB& old): Image(old)
             (*this).matrice[x][y]=old.matrice[x][y];
         }
     } 
-
 }
 
 ImageB::~ImageB() 
@@ -44,7 +43,6 @@ ImageB::~ImageB()
     #ifdef DEBUG
 	cout << "Je suis le destructeur ImageB" << endl<<endl;
 	#endif
-
 }
 
 void ImageB::setBackground(const bool valeur) 
@@ -56,7 +54,6 @@ void ImageB::setBackground(const bool valeur)
             setPixel(x,y,valeur);
         }
     }
-
 }
 
 void ImageB::setPixel(int x, int y, const bool valeur) 
@@ -65,7 +62,6 @@ void ImageB::setPixel(int x, int y, const bool valeur)
     {
         matrice[x][y]= valeur;
     }
-
 }
 
 bool ImageB::getPixel(int x, int y) const 
@@ -111,7 +107,6 @@ ImageB& ImageB::operator=(const ImageB& old)
             matrice[x][y]=old.matrice[x][y];
         }
     } 
-
     return *this;
 }
 
