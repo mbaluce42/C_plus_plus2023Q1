@@ -108,7 +108,7 @@ void Essai1()
 //*************************************************************************************************
 //*** Tests de setBackground, setPixel, Dessine et constructeur de copie de ImageRGB ************** 
 //*************************************************************************************************
-/*void Essai2()
+void Essai2()
 {
   cout << endl << "(2) Tests de setBackground, setPixel, Dessine et constructeur de copie de ImageRGB ********" << endl;
   
@@ -129,31 +129,6 @@ void Essai1()
     image2.Dessine();
     cout << "Destruction de image2..." << endl;
   }
-
-  cout << "Re-voici image1..." << endl;
-  image1.Affiche();
-  image1.Dessine();
-}*/
-void Essai2()
-{
-  cout << endl << "(2) Tests de setBackground, setPixel, Dessine et constructeur de copie de ImageRGB ********" << endl;
-  
-  ImageRGB image1(1, "testCouleur", Dimension(300, 300));
-  image1.setBackground(Couleur(0, 0, 128));
-  for (int x = 0; x < 300; x += 4) image1.setPixel(x, x, Couleur::VERT);
-  cout << "Voici image1..." << endl;
-  image1.Affiche();
-  image1.Dessine();
-
-  ImageRGB image2(image1);/* = new ImageRGB(image1);*/
-  cout << "On modifie la copie image2 de image1..." << endl;
-  for (int x = 0; x < 300; x += 4) image2.setPixel(x, 299 - x, Couleur::ROUGE);
-  image2.setNom("testModif");
-  cout << "Voici image2..." << endl;
-  image2.Affiche();
-  image2.Dessine();
-  cout << "Destruction de image2..." << endl;
-  //delete image2;
 
   cout << "Re-voici image1..." << endl;
   image1.Affiche();
@@ -198,6 +173,8 @@ void Essai4()
   cout << "Voici image1..." << endl;
   image1.Affiche();
   image1.Dessine();
+  cin.ignore(numeric_limits<streamsize>::max(), '\n');
+  cout.flush();
 
   {
     ImageB image2 (image1);

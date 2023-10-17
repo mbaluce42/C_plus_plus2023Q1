@@ -36,6 +36,9 @@ ImageRGB::ImageRGB(const ImageRGB& old): Image(old)
             (*this).matrice[x][y]=old.matrice[x][y];
         }
     } 
+    #ifdef DEBUG
+	cout << "Je suis le constructeur copie ImageRGB" << endl<<endl;
+	#endif
 }
 
 ImageRGB::ImageRGB(const char* nomFichier): Image(nomFichier)

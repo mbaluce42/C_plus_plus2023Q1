@@ -7,7 +7,7 @@ Couleur ImageB::couleurFalse(255,255,255);
 ImageB::ImageB()
 {
     #ifdef DEBUG
-	cout << "Je suis le constructeur par defaut ImageNG" << endl<<endl;
+	cout << "Je suis le constructeur par defaut ImageB" << endl<<endl;
 	#endif
 }
 
@@ -15,7 +15,7 @@ ImageB::ImageB(int id, const string& nom): Image()
 {
     #ifdef DEBUG
   /*comme le contructeur par defaut sauf qu'il est parametre*/
-  cout << "Je suis le contructeur d'initialisation1 ImageRBG" << endl<<endl;
+  cout << "Je suis le contructeur d'initialisation1 ImageB" << endl<<endl;
   #endif
 }
     
@@ -36,6 +36,10 @@ ImageB::ImageB(const ImageB& old): Image(old)
             (*this).matrice[x][y]=old.matrice[x][y];
         }
     } 
+    #ifdef DEBUG
+	cout << "Je suis le constructeur copie ImageB" << endl<<endl;
+	#endif
+
 }
 
 ImageB::~ImageB() 
