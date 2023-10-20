@@ -34,9 +34,9 @@ ImageNG::ImageNG(int id, const string& nom,const Dimension& dimension) : Image(i
 // Constructeur de copie
 ImageNG::ImageNG(const ImageNG& old) : Image(old)
 {
-    for(int x=0;x<=dimension.getLargeur(); x++)
+    for(int x=0;x<dimension.getLargeur(); x++)
     {
-        for(int y=0; y<=dimension.getHauteur(); y++)
+        for(int y=0; y<dimension.getHauteur(); y++)
         {
             (*this).matrice[x][y]=old.matrice[x][y];
         }
@@ -59,15 +59,13 @@ ImageNG::~ImageNG()
 	#ifdef DEBUG
 	cout << "Je suis le destructeur ImageNG" << endl<<endl;
 	#endif
-
 }
 
 // Getter pour l'ID
 
 void ImageNG::setPixel(int x, int y, int val)
 {
-    
-    if(x>=0 && x< dimension.getLargeur() && y>=0 && y< dimension.getHauteur() && (val<=255 && val>=0 ))
+    if(x>=0 && x<dimension.getLargeur() && y>=0 && y<dimension.getHauteur() && (val<=255 && val>=0 ))
     {
         matrice[x][y]= val;
     }
@@ -80,10 +78,9 @@ int ImageNG::getPixel(const int x,const int y) const
 
 void ImageNG::setBackground(int val)
 {
-    
-    for(int x=0;x<=dimension.getLargeur(); x++)
+    for(int x=0;x<dimension.getLargeur(); x++)
     {
-        for(int y=0; y<=dimension.getHauteur(); y++)
+        for(int y=0; y<dimension.getHauteur(); y++)
         {
             setPixel(x,y,val);
         }
@@ -95,9 +92,9 @@ int ImageNG::getLuminance() const
     int somme=0;
     int nbrElem= dimension.getHauteur()*dimension.getLargeur();
 
-    for(int x=0;x<=dimension.getLargeur(); x++)
+    for(int x=0;x<dimension.getLargeur(); x++)
     {
-        for(int y=0; y<=dimension.getHauteur(); y++)
+        for(int y=0; y<dimension.getHauteur(); y++)
         {
             somme+= matrice[x][y];
         }
@@ -108,9 +105,9 @@ int ImageNG::getLuminance() const
 int ImageNG::getMinimum() const
 {
     int min=matrice[0][0];
-    for(int x=0;x<=dimension.getLargeur(); x++)
+    for(int x=0;x<dimension.getLargeur(); x++)
     {
-        for(int y=1; y<=dimension.getHauteur(); y++)
+        for(int y=1; y<dimension.getHauteur(); y++)
         {
             if(matrice[x][y]<min){min=matrice[x][y]; }
         }
@@ -121,9 +118,9 @@ int ImageNG::getMinimum() const
 int ImageNG::getMaximun() const
 {
     int max=matrice[0][0];
-    for(int x=0;x<=dimension.getLargeur(); x++)
+    for(int x=0;x<dimension.getLargeur(); x++)
     {
-        for(int y=1; y<=dimension.getHauteur(); y++)
+        for(int y=1; y<dimension.getHauteur(); y++)
         {
             if(matrice[x][y]>max){max=matrice[x][y]; }
         }
@@ -176,14 +173,13 @@ const ImageNG& ImageNG::operator=(const ImageNG& old)
     setNom(old.nom);
     setDimension(old.dimension);
 
-    for(int x=0;x<=dimension.getLargeur(); x++)
+    for(int x=0;x<dimension.getLargeur(); x++)
     {
-        for(int y=0; y<=dimension.getHauteur(); y++)
+        for(int y=0; y<dimension.getHauteur(); y++)
         {
             matrice[x][y]=old.matrice[x][y];
         }
     } 
-
     return *this;
 }
 
@@ -226,7 +222,6 @@ ImageNG ImageNG::operator-(int valeur) const
     {
         for (int y = 0; y < newImage.getDimension().getHauteur(); ++y) 
         {
-
             int niveauGris = newImage.getPixel(x, y);
             niveauGris -= valeur;
             if(niveauGris < 0){ niveauGris=0;}
@@ -238,8 +233,10 @@ ImageNG ImageNG::operator-(int valeur) const
 
 ImageNG& ImageNG::operator++() 
 {
-    for (int x = 0; x < dimension.getLargeur(); ++x) {
-        for (int y = 0; y < dimension.getHauteur(); ++y) {
+    for (int x = 0; x < dimension.getLargeur(); ++x) 
+    {
+        for (int y = 0; y < dimension.getHauteur(); ++y) 
+        {
             int pixel = matrice[x][y] + 20;
             if (pixel > 255) {matrice[x][y] = 255;} 
             else {matrice[x][y] = pixel;}
@@ -303,10 +300,8 @@ bool ImageNG::operator<(const ImageNG& other) const
         {
             L_Image += newImage.getPixel(x, y) ;
             R_Image += other.getPixel(x, y);
-
         }
     }
-
     if(L_Image < R_Image ){return true;}
     else{return false;} 
 }
@@ -322,10 +317,8 @@ bool ImageNG::operator>(const ImageNG& other) const
         {
             L_Image += newImage.getPixel(x, y) ;
             R_Image += other.getPixel(x, y);
-
         }
     }
-
     if(L_Image > R_Image ){return true;}
     else{return false;} 
 }
@@ -340,11 +333,8 @@ bool ImageNG::operator==(const ImageNG& other) const {
         {
             L_Image += newImage.getPixel(x, y) ;
             R_Image += other.getPixel(x, y);
-
         }
     }
-
     if(L_Image == R_Image ){return true;}
     else{return false;} 
-    
 }

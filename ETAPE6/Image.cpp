@@ -4,6 +4,11 @@
 #include <string>
 using namespace std;
 
+
+
+
+
+
 // Constructeur par défaut
 Image::Image(): Image(99,"XXX")
 {

@@ -1,4 +1,5 @@
 #include "Couleur.h"
+#include "RGBException.h"
 
 
 
@@ -41,16 +42,19 @@ int Couleur::getBleu() const
 void Couleur::setRouge(const int r)
 {
     if(r>=0 && r<=255){ rouge=r;}
+    else{ throw RGBException("Composante rouge invalide !",r);}
 }
 
 void Couleur::setVert(const int v)
 {
     if(v>=0 && v<=255){ vert=v;}
+    else{ throw RGBException("Composante vert invalide !",v);}
 }
 
 void Couleur::setBleu(const int b) 
 {
     if(b>=0 && b<=255){ bleu=b;}
+    else{ throw RGBException("Composante bleu invalide !",b);}
 }
 
 void Couleur::Affiche() const 

@@ -6,7 +6,6 @@ ImageRGB::ImageRGB()
     #ifdef DEBUG
 	cout << "Je suis le constructeur par defaut ImageNG" << endl<<endl;
 	#endif
-
 }
 
 ImageRGB::ImageRGB(int id, const string& nom): Image()
@@ -15,7 +14,6 @@ ImageRGB::ImageRGB(int id, const string& nom): Image()
   /*comme le contructeur par defaut sauf qu'il est parametre*/
   cout << "Je suis le contructeur d'initialisation1 ImageRBG" << endl<<endl;
   #endif
-
 }
     
 ImageRGB::ImageRGB(int id, const string& nom, const Dimension& dimension): Image(id,nom,dimension)
@@ -29,9 +27,9 @@ ImageRGB::ImageRGB(int id, const string& nom, const Dimension& dimension): Image
 
 ImageRGB::ImageRGB(const ImageRGB& old): Image(old)
 {
-    for(int x=0;x<=dimension.getLargeur(); x++)
+    for(int x=0;x<dimension.getLargeur(); x++)
     {
-        for(int y=0; y<=dimension.getHauteur(); y++)
+        for(int y=0; y<dimension.getHauteur(); y++)
         {
             (*this).matrice[x][y]=old.matrice[x][y];
         }
@@ -51,19 +49,17 @@ ImageRGB::~ImageRGB()
     #ifdef DEBUG
 	cout << "Je suis le destructeur ImageRGB" << endl<<endl;
 	#endif
-
 }
 
 void ImageRGB::setBackground(const Couleur& couleur) 
 {
-    for(int x=0;x<=dimension.getLargeur(); x++)
+    for(int x=0;x<dimension.getLargeur(); x++)
     {
-        for(int y=0; y<=dimension.getHauteur(); y++)
+        for(int y=0; y<dimension.getHauteur(); y++)
         {
             setPixel(x,y,couleur);
         }
     }
-
 }
 
 void ImageRGB::setPixel(int x, int y, const Couleur& couleur) 
@@ -72,12 +68,10 @@ void ImageRGB::setPixel(int x, int y, const Couleur& couleur)
     {
         matrice[x][y]= couleur;
     }
-
 }
 
 Couleur ImageRGB::getPixel(int x, int y) const 
 {
- 
     return matrice[x][y];
 }
 
@@ -115,9 +109,9 @@ ImageRGB& ImageRGB::operator=(const ImageRGB& old)
     setNom(old.nom);
     setDimension(old.dimension);
 
-    for(int x=0;x<=dimension.getLargeur(); x++)
+    for(int x=0;x<dimension.getLargeur(); x++)
     {
-        for(int y=0; y<=dimension.getHauteur(); y++)
+        for(int y=0; y<dimension.getHauteur(); y++)
         {
             matrice[x][y]=old.matrice[x][y];
         }

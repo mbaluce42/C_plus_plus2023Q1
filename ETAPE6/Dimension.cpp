@@ -1,4 +1,6 @@
 #include "Dimension.h"
+#include "XYException.h"
+
 
 
 const Dimension Dimension::VGA(640,480);
@@ -55,11 +57,15 @@ int Dimension::getHauteur() const
 void Dimension::setLargeur(int larg)
 {
     if(larg >0){this->largeur = larg; } 
+    else{ throw  XYException("Dimension invalide !" ,'x');}
+
 }
 
 void Dimension::setHauteur(int haut)
 {
     if(haut >0){this->hauteur= haut;}
+    else{ throw  XYException("Dimension invalide !" ,'y');}
+
 }
 
 ostream& operator<<(ostream& os, const Dimension& dimension) 
@@ -90,7 +96,10 @@ bool Dimension::operator==(const Dimension& other) const
     {
         return true;
     } 
-    else {return false;}
+    else 
+    {
+        return false;
+    }
 }
 
 
@@ -102,6 +111,8 @@ bool Dimension::operator!=(const Dimension& other) const
     } 
     else {return false;}
 }
+
+
 
 void Dimension::Affiche() const 
 {

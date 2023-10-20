@@ -127,9 +127,9 @@ void ImageNG::setBackground(int val)
 {
     if (val>255  || val<0 ){return ;}
     
-    for(int x=0;x<=dimension.getLargeur(); x++)
+    for(int x=0;x<dimension.getLargeur(); x++)
     {
-        for(int y=0; y<=dimension.getHauteur(); y++)
+        for(int y=0; y<dimension.getHauteur(); y++)
         {
             matrice[x][y]=val;
         }

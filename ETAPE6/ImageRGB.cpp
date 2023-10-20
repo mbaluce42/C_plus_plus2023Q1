@@ -1,33 +1,33 @@
-#include "ImageB.h"
+#include "ImageRGB.h"
 #include "MyQT.h"
 
-Couleur ImageB::couleurTrue(0,0,0);
-Couleur ImageB::couleurFalse(255,255,255);
-
-ImageB::ImageB()
+ImageRGB::ImageRGB()
 {
     #ifdef DEBUG
-	cout << "Je suis le constructeur par defaut ImageB" << endl<<endl;
+	cout << "Je suis le constructeur par defaut ImageNG" << endl<<endl;
 	#endif
+
 }
 
-ImageB::ImageB(int id, const string& nom): Image()
+ImageRGB::ImageRGB(int id, const string& nom): Image()
 {
     #ifdef DEBUG
   /*comme le contructeur par defaut sauf qu'il est parametre*/
-  cout << "Je suis le contructeur d'initialisation1 ImageB" << endl<<endl;
+  cout << "Je suis le contructeur d'initialisation1 ImageRBG" << endl<<endl;
   #endif
+
 }
     
-ImageB::ImageB(int id, const string& nom, const Dimension& dimension): Image(id,nom,dimension)
+ImageRGB::ImageRGB(int id, const string& nom, const Dimension& dimension): Image(id,nom,dimension)
 {
     #ifdef DEBUG
   /*comme le contructeur par defaut sauf qu'il est parametre*/
-  cout << "Je suis le contructeur d'initialisation2 ImageB" << endl<<endl;
+  cout << "Je suis le contructeur d'initialisation2 ImageRGB" << endl<<endl;
   #endif
 }
 
-ImageB::ImageB(const ImageB& old): Image(old)
+
+ImageRGB::ImageRGB(const ImageRGB& old): Image(old)
 {
     for(int x=0;x<dimension.getLargeur(); x++)
     {
@@ -37,56 +37,65 @@ ImageB::ImageB(const ImageB& old): Image(old)
         }
     } 
     #ifdef DEBUG
-	cout << "Je suis le constructeur copie ImageB" << endl<<endl;
+	cout << "Je suis le constructeur copie ImageRGB" << endl<<endl;
 	#endif
 }
 
-ImageB::~ImageB() 
+ImageRGB::ImageRGB(const char* nomFichier): Image(nomFichier)
+{
+    MyQT::ImportFromFile(*this, nomFichier);
+}
+
+ImageRGB::~ImageRGB() 
 {
     #ifdef DEBUG
-	cout << "Je suis le destructeur ImageB" << endl<<endl;
+	cout << "Je suis le destructeur ImageRGB" << endl<<endl;
 	#endif
 }
 
-void ImageB::setBackground(const bool valeur) 
+void ImageRGB::setBackground(const Couleur& couleur) 
 {
     for(int x=0;x<dimension.getLargeur(); x++)
     {
         for(int y=0; y<dimension.getHauteur(); y++)
         {
-            setPixel(x,y,valeur);
+            setPixel(x,y,couleur);
         }
     }
 }
 
-void ImageB::setPixel(int x, int y, const bool valeur) 
+void ImageRGB::setPixel(int x, int y, const Couleur& couleur) 
 {
     if(x>=0 && x< dimension.getLargeur() && y>=0 && y< dimension.getHauteur() )
     {
-        matrice[x][y]= valeur;
+        matrice[x][y]= couleur;
     }
 }
 
-bool ImageB::getPixel(int x, int y) const 
+Couleur ImageRGB::getPixel(int x, int y) const 
 {
     return matrice[x][y];
 }
 
-void ImageB::Dessine() const
+void ImageRGB::Dessine() const
 {
     MyQT::ViewImage(*this);
 }
 
+void ImageRGB::importFromFile(const char* fichier)
+{
+    MyQT::ImportFromFile(*this,fichier);
+}
 
-void ImageB::exportToFile(const char* fichier,const char* format) const 
+void ImageRGB::exportToFile(const char* fichier,const char* format) const 
 {
     MyQT::ExportToFile(*this,fichier,format);
 }
 
 // Méthode pour afficher les caractéristiques de l'objet
-void ImageB::Affiche() const 
+void ImageRGB::Affiche() const 
 {
-    cout << "-Detail ImageB: "<<endl
+    cout << "-Detail ImageRGB: "<<endl
     << "ID : " << id <<endl
     << "Nom : " << nom <<endl
     << "Dimension: "<< endl
@@ -94,7 +103,7 @@ void ImageB::Affiche() const
     << "Largeur: " << dimension.getLargeur()<<endl;
 }
 
-ImageB& ImageB::operator=(const ImageB& old) 
+ImageRGB& ImageRGB::operator=(const ImageRGB& old) 
 {
     if(this == &old){return *this;}
 
@@ -112,9 +121,9 @@ ImageB& ImageB::operator=(const ImageB& old)
     return *this;
 }
 
-ostream& operator<<(ostream& os, const ImageB& image) 
+ostream& operator<<(ostream& os, const ImageRGB& image) 
 {
-    os <<"-Detail ImageB: "<<endl
+    os <<"-Detail ImageRGB: "<<endl
     << "Id : "<< image.getId()<<endl
     <<"Nom :" <<image.getNom()<<endl
     << "Dimension: "<< endl

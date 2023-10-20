@@ -3,41 +3,30 @@
 #include <cstring>
 #include <string>
 using namespace std;
-
 #include "MyQT.h"
+#include "RGBException.h"
+#include "XYException.h"
 
 
 //const int ImageNG::L_MAX= 500;
 //const int ImageNG::H_MAX= 500;
 // Constructeur par défaut
-ImageNG::ImageNG(): ImageNG(99,"XXX")
+ImageNG::ImageNG():Image()
 {
-    dimension.setHauteur(300);
-    dimension.setLargeur(400);
-    //setDimension(dimension);
-   /* setId(99);
-    //nom=NULL;
-    setNom("XXX");}*/
+
 }
 
 // Constructeur avec paramètres
-ImageNG::ImageNG(int id, const char* nom)
+ImageNG::ImageNG(int id, const string& nom) : Image(id,nom)
 {
-    setId(id);
-    setNom(nom);
-
     #ifdef DEBUG
   /*comme le contructeur par defaut sauf qu'il est parametre*/
   cout << "Je suis le contructeur d'initialisation ImageNG" << endl<<endl;
   #endif
 }
 
-ImageNG::ImageNG(int id, const char* nom, const Dimension& dimension)
+ImageNG::ImageNG(int id, const string& nom,const Dimension& dimension) : Image(id,nom,dimension)
 {
-    setId(id);
-    setNom(nom);
-    setDimension(dimension);
-    
     #ifdef DEBUG
   /*comme le contructeur par defaut sauf qu'il est parametre*/
   cout << "Je suis le contructeur d'initialisation ImageNG" << endl<<endl;
@@ -45,14 +34,11 @@ ImageNG::ImageNG(int id, const char* nom, const Dimension& dimension)
 }
 
 // Constructeur de copie
-ImageNG::ImageNG(const ImageNG& old)
+ImageNG::ImageNG(const ImageNG& old) : Image(old)
 {
-    setNom(old.nom);
-    setId(old.id);
-    setDimension(old.dimension);
-    for(int x=0;x<dimension.getLargeur(); x++)
+    for(int x=0;x<=dimension.getLargeur(); x++)
     {
-        for(int y=0; y<dimension.getHauteur(); y++)
+        for(int y=0; y<=dimension.getHauteur(); y++)
         {
             (*this).matrice[x][y]=old.matrice[x][y];
         }
@@ -63,13 +49,8 @@ ImageNG::ImageNG(const ImageNG& old)
    #endif
 }
 
-ImageNG::ImageNG(const char* nomFichier)
+ImageNG::ImageNG(const char* nomFichier) : Image(nomFichier)
 {
-    setId(0); 
-    setNom(nomFichier);
-    dimension.setHauteur(300);
-    dimension.setLargeur(400);
-    //setDimension(Dimension(dimension.getLargeur(), dimension.getHauteur())); 
     MyQT::ImportFromFile(*this, nomFichier);
 }
 
@@ -77,63 +58,22 @@ ImageNG::ImageNG(const char* nomFichier)
 // Destructeur
 ImageNG::~ImageNG() 
 {
-    if(nom !=NULL)
-	{
-		delete nom;
-		#ifdef DEBUG
-  		cout << "Je suis le destructeur ImageNG" << endl<<endl;
-  		#endif
-	}
+	#ifdef DEBUG
+	cout << "Je suis le destructeur ImageNG" << endl<<endl;
+	#endif
 }
 
 // Getter pour l'ID
-int ImageNG::getId() const 
-{
-    return id;
-}
-
-// Getter pour le nom
-const char* ImageNG::getNom() const 
-{
-    return nom;
-}
-
-// Setter pour l'ID
-void ImageNG::setId(int id) 
-{
-    this->id = id;
-}
-
-// Setter pour le nom
-void ImageNG::setNom(const char* nom) 
-{
-    this->nom=NULL;
-    if(this->nom!=NULL)
-    {
-        delete this->nom;
-    }
-    this->nom = new char[strlen(nom) + 1];
-    strcpy(this->nom, nom);
-}
-
-void ImageNG::setDimension(const Dimension& dimension)
-{
-    this->dimension= dimension;
-    /*this->dimension.setHauteur(dimension.getHauteur());
-    this->dimension.setLargeur(dimension.getLargeur());*/
-} 
-
-const Dimension& ImageNG::getDimension() const
-{
-    return dimension;
-}
 
 void ImageNG::setPixel(int x, int y, int val)
 {
-    if(x>=0 && x<dimension.getLargeur() && y>=0 && y<dimension.getHauteur() && (val<=255 && val>=0 ))
+    if (val>255 || val<0 ) {throw RGBException("Niveau de gris invalide !",val);}
+    
+    if(x>=0 && x<dimension.getLargeur() && y>=0 && y<dimension.getHauteur())
     {
         matrice[x][y]= val;
     }
+    else{throw XYException("Coordonnees pixel invalides !",'d');}
 }
 
 int ImageNG::getPixel(const int x,const int y) const
@@ -142,11 +82,10 @@ int ImageNG::getPixel(const int x,const int y) const
 }
 
 void ImageNG::setBackground(int val)
-{
-    
+{   
     for(int x=0;x<dimension.getLargeur(); x++)
     {
-        for(int y=0; y<dimension.getHauteur(); y++)
+        for(int y=0; y<=dimension.getHauteur(); y++)
         {
             setPixel(x,y,val);
         }
@@ -220,10 +159,14 @@ void ImageNG::exportToFile(const char* fichier,const char* format) const
 // Méthode pour afficher les caractéristiques de l'objet
 void ImageNG::Affiche() const 
 {
-    cout << "ID : " << id <<endl;
-    cout << "Nom : " << nom <<endl;
-    cout << "Hauteur : " << dimension.getHauteur()<<endl;
-    cout << "Largeur: " << dimension.getLargeur()<<endl;
+    cout << "-Detail ImageNG: "<<endl
+    << "ID : " << id <<endl
+    << "Nom : " << nom <<endl
+    << "Dimension: "<< endl
+    << "Hauteur : " << dimension.getHauteur()<<endl
+    << "Largeur: " << dimension.getLargeur()<<endl
+    << "Luminance: "<< getLuminance()<<endl
+    << "Contraste: "<< getContraste()<<endl;
 }
 
 
@@ -247,14 +190,14 @@ const ImageNG& ImageNG::operator=(const ImageNG& old)
 
 ostream& operator<<(ostream& os, const ImageNG& image) 
 {
-    os << "Id : "<< image.getId()<<endl
+    os << "-Detail ImageNG: "<<endl
+    << "Id : "<< image.getId()<<endl
     <<"Nom :" <<image.getNom()<<endl
-    << "Dimension: "<< endl<<"Hauteur: "<<image.getDimension().getHauteur()<<endl <<"Largeur: "<<image.getDimension().getLargeur() <<endl
+    << "Dimension: "<< endl
+    <<"Hauteur: "<<image.getDimension().getHauteur()<<endl <<"Largeur: "<<image.getDimension().getLargeur() <<endl
     << "Luminance: "<< image.getLuminance()<<endl
     << "Contraste: "<< image.getContraste()<<endl;
-    /*image.getMaximun;
-    image.getMinimun;
-    image.getPixel;*/
+
     return os;
 }
 
@@ -263,8 +206,7 @@ ImageNG ImageNG::operator+(int valeur) const
     ImageNG newImage(*this);
     for (int x = 0; x <  newImage.getDimension().getLargeur(); ++x) 
     {
-        for (int y = 0; y < newImage.getDimension().getHauteur(); ++y) 
-        {
+        for (int y = 0; y < newImage.getDimension().getHauteur(); ++y) {
             int niveauGris = newImage.getPixel(x, y);
             niveauGris += valeur;
             if(niveauGris > 255){ niveauGris=255;}
@@ -297,8 +239,7 @@ ImageNG ImageNG::operator-(int valeur) const
 
 ImageNG& ImageNG::operator++() 
 {
-    for (int x = 0; x < dimension.getLargeur(); ++x) 
-    {
+    for (int x = 0; x < dimension.getLargeur(); ++x) {
         for (int y = 0; y < dimension.getHauteur(); ++y) 
         {
             int pixel = matrice[x][y] + 20;
@@ -355,51 +296,76 @@ ImageNG ImageNG::operator-(const ImageNG& other) const
 
 bool ImageNG::operator<(const ImageNG& other) const 
 {
+    if((*this).getDimension().getLargeur() != other.getDimension().getLargeur() && (*this).getDimension().getHauteur() != other.getDimension().getHauteur())
+    {
+        throw XYException("Dimension invalide !",'d');
+    }
+    else if((*this).getDimension().getLargeur() != other.getDimension().getLargeur()){throw XYException("Dimension invalide !",'x');}
+    else {throw XYException("Dimension invalide !",'y');}
+        
     ImageNG newImage(*this);
-    int temp=0;
+    int L_Image=0, R_Image=0;
 
     for (int x = 0; x < newImage.getDimension().getLargeur(); ++x) 
     {
         for (int y = 0; y < newImage.getDimension().getHauteur(); ++y) 
         {
-            if(newImage.getPixel(x, y) < other.getPixel(x, y) ){ temp=1;}
-            else{temp=0; break;}
+            L_Image += newImage.getPixel(x, y) ;
+            R_Image += other.getPixel(x, y);
         }
     }
-    if(temp==1){return true;}
-    else{return false;}
+
+    if(L_Image < R_Image ){return true;}
+    else{return false;} 
 }
 
 bool ImageNG::operator>(const ImageNG& other) const 
 {
+
+    if((*this).getDimension().getLargeur() != other.getDimension().getLargeur() && (*this).getDimension().getHauteur() != other.getDimension().getHauteur())
+    {
+        throw XYException("Dimension invalide !",'d');
+    }
+    else if((*this).getDimension().getLargeur() != other.getDimension().getLargeur()){throw XYException("Dimension invalide !",'x');}
+    else {throw XYException("Dimension invalide !",'y');}
+
     ImageNG newImage(*this);
-    int temp=0;
+    int L_Image=0, R_Image=0;
 
     for (int x = 0; x < newImage.getDimension().getLargeur(); ++x) 
     {
         for (int y = 0; y < newImage.getDimension().getHauteur(); ++y) 
         {
-            if(newImage.getPixel(x, y) > other.getPixel(x, y) ){ temp=1;}
-            else{temp=0; break;}
+            L_Image += newImage.getPixel(x, y) ;
+            R_Image += other.getPixel(x, y);
         }
     }
-    if(temp==1){return true;}
-    else{return false;}
+
+    if(L_Image > R_Image ){return true;}
+    else{return false;} 
 }
 
 bool ImageNG::operator==(const ImageNG& other) const 
 {
+    if((*this).getDimension().getLargeur() != other.getDimension().getLargeur() && (*this).getDimension().getHauteur() != other.getDimension().getHauteur())
+    {
+        throw XYException("Dimension invalide !",'d');
+    }
+    else if((*this).getDimension().getLargeur() != other.getDimension().getLargeur()){throw XYException("Dimension invalide !",'x');}
+    else {throw XYException("Dimension invalide !",'y');}
+
     ImageNG newImage(*this);
-    int temp=0;
+    int L_Image=0, R_Image=0;
 
     for (int x = 0; x < newImage.getDimension().getLargeur(); ++x) 
     {
         for (int y = 0; y < newImage.getDimension().getHauteur(); ++y) 
         {
-            if(newImage.getPixel(x, y) == other.getPixel(x, y) ){ temp=1;}
-            else{temp=0; break;}
+            L_Image += newImage.getPixel(x, y) ;
+            R_Image += other.getPixel(x, y);
         }
     }
-    if(temp==1){return true;}
-    else{return false;}
+
+    if(L_Image == R_Image ){return true;}
+    else{return false;}  
 }
