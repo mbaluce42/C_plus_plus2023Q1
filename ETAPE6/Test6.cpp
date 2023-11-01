@@ -11,6 +11,9 @@ using namespace std;
 #include "ImageNG.h"
 #include "ImageRGB.h"
 #include "ImageB.h"
+#include "Exception.h" 
+#include "RGBException.h" 
+#include "XYException.h" 
 
 int  Menu();
 void Essai1();
@@ -83,7 +86,7 @@ void Essai1()
   // A COMPLETER : Traitez l'exception susceptible d'etre lancee par le bloc de code suivant (try...catch)
   // --> remplacer les ... par ce qu'il faut
 
-  // ...
+  try
   {
     Couleur c;
     cout << "Couleur cree par defaut = " << c << endl;
@@ -105,7 +108,11 @@ void Essai1()
     Couleur c1(r,v,b);
     cout << "Couleur creee = " << c1 << endl << endl;
   }
-  // ...
+  catch(RGBException rgb)
+  {
+    cout << rgb.getMessage() << endl ;
+  }
+  
 
   cout << endl;
 }
@@ -117,7 +124,7 @@ void Essai2()
   // A COMPLETER : Traitez l'exception susceptible d'etre lancee par le bloc de code suivant (try...catch)
   // --> remplacer les ... par ce qu'il faut
 
-  // ...
+  try
   {
     Dimension d;
     cout << "Dimension creee par defaut = " << d << endl;
@@ -140,7 +147,10 @@ void Essai2()
     cin >> d1;
     cout << "Dimension saisie : " << d1 << endl;
   }
-  // ...
+  catch(XYException xy)
+  {
+    cout << xy.getMessage() << endl ;
+  }
   
   cout << endl;
 }
@@ -152,7 +162,7 @@ void Essai3()
   // A COMPLETER : Traitez l'exception susceptible d'etre lancee par le bloc de code suivant (try...catch)
   // --> remplacer les ... par ce qu'il faut
 
-  // ...
+  try
   {
     ImageNG im;
     cout << "ImageNG creee par defaut :" << endl << im << endl; im.Dessine();
@@ -174,7 +184,14 @@ void Essai3()
     cout << "y : "; cin >> y; cin.ignore();
     cout << "Valeur en (" << x << "," << y << ") = " << im.getPixel(x,y) << endl << endl;
   }
-  // ...
+  catch(RGBException rgb)
+  {
+    cout << rgb.getMessage() << endl ;
+  }
+  catch(XYException xy)
+  {
+    cout << xy.getMessage() << endl ;
+  }
   
   cout << endl;
 }
@@ -186,7 +203,7 @@ void Essai4()
   // A COMPLETER : Traitez l'exception susceptible d'etre lancee par le bloc de code suivant (try...catch)
   // --> remplacer les ... par ce qu'il faut
 
-  // ...
+  try
   {
     ImageNG im1,im2;
     cout << "Choisissez deux images parmi " << endl;
@@ -228,7 +245,14 @@ void Essai4()
       cout << "Voici l'image resultat :" << endl << im << endl; im.Dessine();
     }
   }
-  // ...
+  catch(RGBException rgb)
+  {
+    cout << rgb.getMessage() << endl ;
+  }
+  catch(XYException xy)
+  {
+    cout << xy.getMessage() << endl ;
+  }
 
   cout << endl;
 }
@@ -240,7 +264,7 @@ void Essai5()
   // A COMPLETER : Traitez l'exception susceptible d'etre lancee par le bloc de code suivant (try...catch)
   // --> remplacer les ... par ce qu'il faut
 
-  // ...
+  try
   {
     ImageRGB im;
     cout << "ImageRGB creee par defaut :" << endl;
@@ -260,6 +284,14 @@ void Essai5()
     cout << "y : "; cin >> y; cin.ignore();
     cout << "Valeur en (" << x << "," << y << ") = " << im.getPixel(x,y) << endl << endl;
   }
+  catch(RGBException rgb)
+  {
+    cout << rgb.getMessage() << endl ;
+  }
+  catch(XYException xy)
+  {
+    cout << xy.getMessage() << endl ;
+  }
   // ...
   
   cout << endl;
@@ -272,7 +304,7 @@ void Essai6()
   // A COMPLETER : Traitez l'exception susceptible d'etre lancee par le bloc de code suivant (try...catch)
   // --> remplacer les ... par ce qu'il faut
 
-  // ...
+  try
   {
     ImageB im;
     cout << "ImageB creee par defaut :" << endl << im << endl; im.Dessine();
@@ -289,7 +321,14 @@ void Essai6()
     cout << "y : "; cin >> y; cin.ignore();
     cout << "Valeur en (" << x << "," << y << ") = " << im.getPixel(x,y) << endl << endl;
   }
-  // ...
+  catch(RGBException rgb)
+  {
+    cout << rgb.getMessage() << endl ;
+  }
+  catch(XYException xy)
+  {
+    cout << xy.getMessage() << endl ;
+  }
   
   cout << endl;
 }

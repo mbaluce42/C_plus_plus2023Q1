@@ -1,5 +1,4 @@
 #include "XYException.h"
-#define DEBUG
 
 
 /*constructeur par defaut*/

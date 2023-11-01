@@ -1,7 +1,8 @@
 #include "ImageRGB.h"
 #include "MyQT.h"
+#include "XYException.h"
 
-ImageRGB::ImageRGB()
+ImageRGB::ImageRGB():Image()
 {
     #ifdef DEBUG
 	cout << "Je suis le constructeur par defaut ImageNG" << endl<<endl;
@@ -70,6 +71,7 @@ void ImageRGB::setPixel(int x, int y, const Couleur& couleur)
     {
         matrice[x][y]= couleur;
     }
+    else{throw XYException("Coordonnees pixel invalides !",'d');}
 }
 
 Couleur ImageRGB::getPixel(int x, int y) const 

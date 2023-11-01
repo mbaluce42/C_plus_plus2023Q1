@@ -16,6 +16,7 @@ Dimension::Dimension(): Dimension(400,300)
 // Constructeur avec paramètres
 Dimension::Dimension(const int larg, const int haut)
 {
+    if(larg <1 && haut < 1){throw XYException("Dimension invalide !",'d');}
     setLargeur(larg);
     setHauteur(haut);
 
@@ -28,6 +29,7 @@ Dimension::Dimension(const int larg, const int haut)
 // Constructeur de copie
 Dimension::Dimension(const Dimension& d)
 {
+    if(d.getLargeur() <1 && d.getHauteur() < 1){throw XYException("Dimension invalide !",'d');}
     setHauteur(d.hauteur);
     setLargeur(d.largeur);
 
@@ -84,6 +86,8 @@ istream& operator>>(istream& is, Dimension& dimension)
     is >> larg;
     cout<<"Hauteur: ";
     is >> haut;
+    if(larg <1 && haut < 1){throw XYException("Dimension invalide !",'d');}
+    
     dimension.setLargeur(larg);
     dimension.setHauteur(haut);
     return is;
@@ -96,10 +100,7 @@ bool Dimension::operator==(const Dimension& other) const
     {
         return true;
     } 
-    else 
-    {
-        return false;
-    }
+    else {return false;}
 }
 
 
@@ -111,7 +112,6 @@ bool Dimension::operator!=(const Dimension& other) const
     } 
     else {return false;}
 }
-
 
 
 void Dimension::Affiche() const 

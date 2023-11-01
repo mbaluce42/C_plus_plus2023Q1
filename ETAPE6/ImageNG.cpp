@@ -36,9 +36,9 @@ ImageNG::ImageNG(int id, const string& nom,const Dimension& dimension) : Image(i
 // Constructeur de copie
 ImageNG::ImageNG(const ImageNG& old) : Image(old)
 {
-    for(int x=0;x<=dimension.getLargeur(); x++)
+    for(int x=0;x<dimension.getLargeur(); x++)
     {
-        for(int y=0; y<=dimension.getHauteur(); y++)
+        for(int y=0; y<dimension.getHauteur(); y++)
         {
             (*this).matrice[x][y]=old.matrice[x][y];
         }
@@ -68,7 +68,7 @@ ImageNG::~ImageNG()
 void ImageNG::setPixel(int x, int y, int val)
 {
     if (val>255 || val<0 ) {throw RGBException("Niveau de gris invalide !",val);}
-    
+
     if(x>=0 && x<dimension.getLargeur() && y>=0 && y<dimension.getHauteur())
     {
         matrice[x][y]= val;
@@ -85,7 +85,7 @@ void ImageNG::setBackground(int val)
 {   
     for(int x=0;x<dimension.getLargeur(); x++)
     {
-        for(int y=0; y<=dimension.getHauteur(); y++)
+        for(int y=0; y<dimension.getHauteur(); y++)
         {
             setPixel(x,y,val);
         }
@@ -104,6 +104,7 @@ int ImageNG::getLuminance() const
             somme+= matrice[x][y];
         }
     }
+    if(somme ==0) return 0;
     return (somme/nbrElem);
 }
 
@@ -137,6 +138,8 @@ float ImageNG::getContraste() const
 {
     int max= getMaximun();
     int min= getMinimum();
+
+    if(max-min==0) return 0;
 
     return ((max-min)/(max+min)); 
 }
@@ -296,12 +299,12 @@ ImageNG ImageNG::operator-(const ImageNG& other) const
 
 bool ImageNG::operator<(const ImageNG& other) const 
 {
-    if((*this).getDimension().getLargeur() != other.getDimension().getLargeur() && (*this).getDimension().getHauteur() != other.getDimension().getHauteur())
+    if(this->getDimension().getLargeur() != other.getDimension().getLargeur() && this->getDimension().getHauteur() != other.getDimension().getHauteur())
     {
         throw XYException("Dimension invalide !",'d');
     }
-    else if((*this).getDimension().getLargeur() != other.getDimension().getLargeur()){throw XYException("Dimension invalide !",'x');}
-    else {throw XYException("Dimension invalide !",'y');}
+    else if(this->getDimension().getLargeur() != other.getDimension().getLargeur()){throw XYException("Dimension invalide !",'x');}
+    else if(this->getDimension().getHauteur() != other.getDimension().getHauteur()){throw XYException("Dimension invalide !",'y');}
         
     ImageNG newImage(*this);
     int L_Image=0, R_Image=0;

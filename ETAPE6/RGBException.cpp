@@ -1,5 +1,4 @@
 #include "RGBException.h"
-#define DEBUG
 
 
 /*constructeur par defaut*/

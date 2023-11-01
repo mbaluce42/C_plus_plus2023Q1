@@ -1,10 +1,11 @@
 #include "ImageB.h"
 #include "MyQT.h"
+#include "XYException.h"
 
 Couleur ImageB::couleurTrue(0,0,0);
 Couleur ImageB::couleurFalse(255,255,255);
 
-ImageB::ImageB()
+ImageB::ImageB():Image()
 {
     #ifdef DEBUG
 	cout << "Je suis le constructeur par defaut ImageB" << endl<<endl;
@@ -29,17 +30,16 @@ ImageB::ImageB(int id, const string& nom, const Dimension& dimension): Image(id,
 
 ImageB::ImageB(const ImageB& old): Image(old)
 {
-    for(int x=0;x<=dimension.getLargeur(); x++)
+    for(int x=0;x<dimension.getLargeur(); x++)
     {
-        for(int y=0; y<=dimension.getHauteur(); y++)
+        for(int y=0; y<dimension.getHauteur(); y++)
         {
-            (*this).matrice[x][y]=old.matrice[x][y];
+            this->matrice[x][y]=old.matrice[x][y];
         }
     } 
     #ifdef DEBUG
 	cout << "Je suis le constructeur copie ImageB" << endl<<endl;
 	#endif
-
 }
 
 ImageB::~ImageB() 
@@ -51,9 +51,9 @@ ImageB::~ImageB()
 
 void ImageB::setBackground(const bool valeur) 
 {
-    for(int x=0;x<=dimension.getLargeur(); x++)
+    for(int x=0;x<dimension.getLargeur(); x++)
     {
-        for(int y=0; y<=dimension.getHauteur(); y++)
+        for(int y=0; y<dimension.getHauteur(); y++)
         {
             setPixel(x,y,valeur);
         }
@@ -66,6 +66,8 @@ void ImageB::setPixel(int x, int y, const bool valeur)
     {
         matrice[x][y]= valeur;
     }
+    else{throw XYException("Coordonnees pixel invalides !",'d');}
+    
 }
 
 bool ImageB::getPixel(int x, int y) const 
@@ -103,9 +105,9 @@ ImageB& ImageB::operator=(const ImageB& old)
     setNom(old.nom);
     setDimension(old.dimension);
 
-    for(int x=0;x<=dimension.getLargeur(); x++)
+    for(int x=0;x<dimension.getLargeur(); x++)
     {
-        for(int y=0; y<=dimension.getHauteur(); y++)
+        for(int y=0; y<dimension.getHauteur(); y++)
         {
             matrice[x][y]=old.matrice[x][y];
         }

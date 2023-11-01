@@ -1,6 +1,4 @@
 #include "Exception.h"
-#define DEBUG
-
 
 /*constructeur par defaut*/
 Exception::Exception()
