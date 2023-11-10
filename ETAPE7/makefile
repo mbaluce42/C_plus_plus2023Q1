@@ -1,10 +1,10 @@
 
-PROGAMS = Test6
+PROGAMS = Test7
 
 all: $(PROGAMS)
 
-Test6:	Test6.cpp ImageNG.o Image.o ImageRGB.o ImageB.o Dimension.o Couleur.o MyQT.o Exception.o RGBException.o XYException.o
-		g++ Test6.cpp -o Test6 MyQT.o ImageNG.o Image.o ImageRGB.o ImageB.o Dimension.o Couleur.o Exception.o RGBException.o XYException.o -lSDL -lpthread -Wl,-O1 -pipe -O2 -std=gnu++11 -Wall -W -D_REENTRANT -fPIC -DQT_DEPRECATED_WARNINGS -DQT_NO_DEBUG -DQT_WIDGETS_LIB -DQT_GUI_LIB -I.DQT_CORE_LIB -isystem      /usr/include/qt5      -isystem /usr/include/qt5/QtWidgets -isystem  /usr/include/qt5/QtGui  -isystem /usr/include/qt5/QtCore -I. -I. -I/usr/lib64/qt5/mkspecs/linux-g++ /usr/lib64/libQt5Gui.so /usr/lib64/libQt5Widgets.so /usr/lib64/libQt5Core.so /usr/lib64/libGL.so -DDEBUG
+Test7:	Test7.cpp ImageNG.o Image.o ImageRGB.o ImageB.o Dimension.o Couleur.o ArrayList.o Iterateur.o MyQT.o Exception.o RGBException.o XYException.o
+		g++ Test7.cpp -o Test7 MyQT.o ImageNG.o Image.o ImageRGB.o ImageB.o Dimension.o Couleur.o ArrayList.o Iterateur.o Exception.o RGBException.o XYException.o -lSDL -lpthread -Wl,-O1 -pipe -O2 -std=gnu++11 -Wall -W -D_REENTRANT -fPIC -DQT_DEPRECATED_WARNINGS -DQT_NO_DEBUG -DQT_WIDGETS_LIB -DQT_GUI_LIB -I.DQT_CORE_LIB -isystem      /usr/include/qt5      -isystem /usr/include/qt5/QtWidgets -isystem  /usr/include/qt5/QtGui  -isystem /usr/include/qt5/QtCore -I. -I. -I/usr/lib64/qt5/mkspecs/linux-g++ /usr/lib64/libQt5Gui.so /usr/lib64/libQt5Widgets.so /usr/lib64/libQt5Core.so /usr/lib64/libGL.so -DDEBUG
 
 ImageNG.o:	ImageNG.cpp ImageNG.h
 			g++ ImageNG.cpp -c -DDEBUG
@@ -23,6 +23,12 @@ Dimension.o: Dimension.cpp Dimension.h
 
 Couleur.o:	Couleur.cpp Couleur.h
 			g++ Couleur.cpp -c -DDEBUG
+
+ArrayList.o:	ArrayList.cpp ArrayList.h
+				g++ ArrayList.cpp -c -DDEBUG
+
+Iterateur.o:	Iterateur.cpp Iterateur.h
+				g++ Iterateur.cpp -c -DDEBUG
 		
 MyQT.o:	MyQT.cpp MyQT.h
 		g++ -c MyQT.cpp -pipe -O2 -std=gnu++11 -Wall -W -D_REENTRANT -fPIC -DQT_DEPRECATED_WARNINGS  -DQT_NO_DEBUG -DQT_WIDGETS_LIB -DQT_GUI_LIB -I.DQT_CORE_LIB -isystem      /usr/include/qt5      -isystem /usr/include/qt5/QtWidgets  -isystem  /usr/include/qt5/QtGui   -isystem /usr/include/qt5/QtCore -I. -I. -I/usr/lib64/qt5/mkspecs/linux-g++

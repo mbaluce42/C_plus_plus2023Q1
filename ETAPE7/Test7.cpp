@@ -27,11 +27,11 @@ int main(int argc,char* argv[])
     switch(choix)
     {
       case 1 : Essai1(); break;
-      case 2 : Essai2(); break;
+      /*case 2 : Essai2(); break;
       case 3 : Essai3(); break;
       case 4 : Essai4(); break;
       case 5 : Essai5(); break;
-      case 6 : Essai6(); break;
+      case 6 : Essai6(); break;*/
       default : fini = true ; break;
     }
   }
@@ -104,7 +104,7 @@ void Essai1()
 }
 
 /*******************************************************************************************************/
-void Essai2()
+/*void Essai2()
 {
   cout << "----- 2. Test du constructeur de copie ArrayList avec des entiers ---------------------------" << endl;
   cout << "----- 2.1 Creation et gestion d'une Liste ---------------------------------------------------" << endl;
@@ -134,10 +134,10 @@ void Essai2()
   cout << endl << "Et revoici la liste de depart : " << endl;
   liste.Affiche();
   cout << endl;
-}
+}*/
 
 /*******************************************************************************************************/
-void Essai3()
+/*void Essai3()
 {
   cout << "----- 3. Test de l'operateur = de ArrayList avec des entiers ---------------------------------" << endl;
   cout << "----- 3.1 Creation et gestion d'une Liste --------------------------------------------------" << endl;
@@ -168,10 +168,10 @@ void Essai3()
   cout << endl << "Et revoici la liste de depart : " << endl;
   liste.Affiche();
   cout << endl;
-}
+}*/
 
 /*********************************************************************************************/
-void Essai4()
+/*void Essai4()
 {
   cout << "----- 4. Test du template ArrayList avec des objets de la classe Couleur --------------" << endl;
   cout << "Creation  d'une ArrayList..." << endl;
@@ -194,10 +194,10 @@ void Essai4()
   cout << "La liste contient " << liste.getNombreElements() << " elements." << endl << endl;
 
   cout << endl;
-}
+}*/
 
 /*******************************************************************************************************/
-void Essai5()
+/*void Essai5()
 {
   cout << "----- 5. Test de l'iterateur avec une ArrayList d'entiers ------------------------" << endl;
   cout << "Creation  d'une Liste..." << endl;
@@ -232,10 +232,10 @@ void Essai5()
     cout << " " << (int)it << endl;
     it++;
   }
-}
+}*/
 
 /*******************************************************************************************************/
-void Essai6()
+/*void Essai6()
 {
   cout << "----- 6. Test de l'iterateur avec une ArrayList de couleurs ---------------------" << endl;
   cout << "Creation  d'une Liste..." << endl;
@@ -264,6 +264,6 @@ void Essai6()
     cout << " " << (Couleur)it << endl;
     it++;
   }
-}
+}*/
 
 /*******************************************************************************************************/
