@@ -4,6 +4,8 @@
 #include <iostream>
 using namespace std;
 
+template<class T> class Iterateur;
+
 template<class T>
 class ArrayList
 {
@@ -22,5 +24,6 @@ public:
     T retireElement(int ind);
     T& getElement(int ind);
     ArrayList& operator=(const ArrayList& old);
+    friend class Iterateur<T>;//pour que l'itérateur puisse accéder aux membres privés de ArrayList
 };
 #endif

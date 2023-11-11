@@ -1,5 +1,6 @@
 #include "ArrayList.h"
-#define DEBUG
+#include "Couleur.h"
+
 
 
 /*constructeur par defaut*/
@@ -122,40 +123,43 @@ T ArrayList<T>::retireElement(int ind)
     //ind est errone ou arrayList est vide
     if (ind<0 || ind>(getNombreElements()-1) || estVide()==true)
     {
-        return NULL;
-    }
-
-    Cellule<T>* Pprecedent ;
-    Cellule<T>* Psuivant=pTete ;
-    T valDelet=NULL;
-    int cpt=0;
-
-    while(Psuivant != NULL)
-    {
-        if(cpt== ind)
-        {
-            break;
-        }
-        Pprecedent=Psuivant;
-        Psuivant= Psuivant->suivant;
-        cpt++;
-    }
-
-    if(Psuivant==NULL){ return valDelet;}//element pas trouve
-
-    valDelet= Psuivant->valeur;
-    //c'est que la val a supprimer ce trouve au premier element
-    if(Pprecedent==NULL)
-    {
-        pTete=Psuivant->suivant;
+        cout<<"ind errone ou arrayList vide"<<endl;//return NULL;
     }
     else
     {
-        Pprecedent->suivant=Psuivant->suivant;
+
+        Cellule<T>* Pprecedent ;
+        Cellule<T>* Psuivant=pTete ;
+        
+        int cpt=0;
+
+        while(Psuivant != NULL)
+        {
+            if(cpt== ind)
+            {
+                break;
+            }
+            Pprecedent=Psuivant;
+            Psuivant= Psuivant->suivant;
+            cpt++;
+        }
+
+        if(Psuivant==NULL){ cout<<"element pas trouve"<<endl ;}//element pas trouve
+
+        T valDelet= Psuivant->valeur;
+        //c'est que la val a supprimer ce trouve au premier element
+        if(Pprecedent==NULL)
+        {
+            pTete=Psuivant->suivant;
+        }
+        else
+        {
+            Pprecedent->suivant=Psuivant->suivant;
+        }
+        
+        delete Psuivant;
+        return valDelet;//element trouve 
     }
-    
-    delete Psuivant;
-    return valDelet;//element trouve 
 }
 
 template <class T>
@@ -166,19 +170,21 @@ T& ArrayList<T>::getElement(int ind)
     {
         cout<<"ind erronne ou arrayList vide "<<endl;//return NULL;
     }
-
-    Cellule<T>* temp = pTete;
-    int cpt=0;
-
-    while(temp != NULL)
+    else
     {
-        if(cpt== ind){break;}
-        temp= temp->suivant;
-        cpt++;
+        Cellule<T>* temp = pTete;
+        int cpt=0;
+
+        while(temp != NULL)
+        {
+            if(cpt== ind){break;}
+            temp= temp->suivant;
+            cpt++;
+        }
+        
+        if(temp==NULL){ cout<<"NULL, element pas trouvé"<<endl;/*return NULL;*/}//element pas trouve
+        return temp->valeur;//element trouve 
     }
-    
-    if(temp==NULL){ cout<<"NULL, element pas trouvé"<<endl;/*return NULL;*/}//element pas trouve
-    return temp->valeur;//element trouve 
 }
 
 template <class T>
@@ -207,3 +213,4 @@ ArrayList<T>& ArrayList<T>::operator=(const ArrayList& old)
 }
 
 template class ArrayList<int>;
+template class ArrayList<Couleur>;
