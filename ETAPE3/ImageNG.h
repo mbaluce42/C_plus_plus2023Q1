@@ -44,5 +44,4 @@ public:
     void exportToFile(const char* fichier,const char* format)const ;
 
 };
-
 #endif
