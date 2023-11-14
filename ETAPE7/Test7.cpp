@@ -31,7 +31,7 @@ int main(int argc,char* argv[])
       case 3 : Essai3(); break;
       case 4 : Essai4(); break;
       case 5 : Essai5(); break;
-      //case 6 : Essai6(); break;
+      case 6 : Essai6(); break;
       default : fini = true ; break;
     }
   }
@@ -235,7 +235,7 @@ void Essai5()
 }
 
 /*******************************************************************************************************/
-/*void Essai6()
+void Essai6()
 {
   cout << "----- 6. Test de l'iterateur avec une ArrayList de couleurs ---------------------" << endl;
   cout << "Creation  d'une Liste..." << endl;
@@ -264,6 +264,6 @@ void Essai5()
     cout << " " << (Couleur)it << endl;
     it++;
   }
-}*/
+}
 
 /*******************************************************************************************************/

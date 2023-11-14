@@ -39,13 +39,13 @@ void Iterateur<T>::operator++(int)
 template<class T>
 Iterateur<T>::operator T()const
 {
-  return pElement->suivant;
+  return pElement->valeur;
 }
 
 template<class T>
 T& Iterateur<T>::operator&()
 {
-    return pElement->valeur;
+    return (T&)(pElement->valeur);
 }
 
 template class Iterateur<int>;
