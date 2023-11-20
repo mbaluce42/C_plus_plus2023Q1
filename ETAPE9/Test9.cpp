@@ -36,11 +36,11 @@ int main(int argc,char* argv[])
     {
       case 1 : Essai1(); break;
       case 2 : Essai2(); break;
-      case 3 : Essai3(); break;
+      /*case 3 : Essai3(); break;
       case 4 : Essai4(); break;
       case 5 : Essai5(); break;
       case 6 : Essai6(); break;
-      case 7 : Essai7(); break;
+      case 7 : Essai7(); break;*/
       default : fini = true ; break;
     }
   }
@@ -106,16 +106,16 @@ void Essai2()
 
   ImageNG image2("../images/mandrill.bmp");
   image2.setNom("mandrill");
-  cout << "Voici l'image de départ : " << image << endl; image2.Dessine();
+  cout << "Voici l'image de départ : " << image2 << endl; image2.Dessine();
 
   ImageNG imageFiltree2;
-  imageFiltree2 = Traitements::FiltreMoyenneur(image2,11);
+  imageFiltree2 = Traitements::FiltreMoyenneur(image,11);
 
   cout << "Voici l'image filtree : " << imageFiltree2 << endl; imageFiltree2.Dessine();
 }
 
 //*******************************************************************************************************
-void Essai3()
+/*void Essai3()
 {
   cout << "***** 3. Test du filtre median sur une ImageNG ********************************************" << endl;
 
@@ -132,10 +132,10 @@ void Essai3()
   imageFiltree = Traitements::FiltreMedian(image,taille);
 
   cout << "Voici l'image filtree : " << imageFiltree << endl; imageFiltree.Dessine();
-}
+}*/
 
 //*******************************************************************************************************
-void Essai4()
+/*void Essai4()
 {
   cout << "***** 4. Test de l'erosion sur une ImageNG ********************************************" << endl;
 
@@ -152,10 +152,10 @@ void Essai4()
   imageFiltree = Traitements::Erosion(image,taille);
 
   cout << "Voici l'image erodee : " << imageFiltree << endl; imageFiltree.Dessine();
-}
+}*/
 
 //*******************************************************************************************************
-void Essai5()
+/*void Essai5()
 {
   cout << "***** 5. Test de la dilatation sur une ImageNG ********************************************" << endl;
 
@@ -172,10 +172,10 @@ void Essai5()
   imageFiltree = Traitements::Dilatation(image,taille);
 
   cout << "Voici l'image dilatee : " << imageFiltree << endl; imageFiltree.Dessine();
-}
+}*/
 
 //*******************************************************************************************************
-void Essai6()
+/*void Essai6()
 {
   cout << "***** 6. Essai de detection de contours sur une ImageNG ************************************" << endl;
 
@@ -188,10 +188,10 @@ void Essai6()
   imageResultat.setNom("joconde-contours");
 
   cout << "Voici l'image contours : " << imageResultat << endl; imageResultat.Dessine();
-}
+}*/
 
 //*******************************************************************************************************
-void Essai7()
+/*void Essai7()
 {
   cout << "***** 7. Test du negatif sur une ImageNG ************************************" << endl;
 
@@ -203,5 +203,5 @@ void Essai7()
   negatif = Traitements::Negatif(image);
 
   cout << "Voici l'image negatif : " << negatif << endl; negatif.Dessine();
-}
+}*/
 
