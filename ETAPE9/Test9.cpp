@@ -39,8 +39,8 @@ int main(int argc,char* argv[])
       case 3 : Essai3(); break;
       case 4 : Essai4(); break;
       case 5 : Essai5(); break;
-      /*case 6 : Essai6(); break;
-      case 7 : Essai7(); break;*/
+      case 6 : Essai6(); break;
+      //case 7 : Essai7(); break;
       default : fini = true ; break;
     }
   }
@@ -175,7 +175,7 @@ void Essai5()
 }
 
 //*******************************************************************************************************
-/*void Essai6()
+void Essai6()
 {
   cout << "***** 6. Essai de detection de contours sur une ImageNG ************************************" << endl;
 
@@ -183,12 +183,13 @@ void Essai5()
   image.setNom("joconde");
   cout << "Voici l'image de départ : " << image << endl; image.Dessine();
 
-  ImageNG imageResultat;
-  imageResultat = Traitements::Dilatation(image,3) - Traitements::Erosion(image,3);
-  imageResultat.setNom("joconde-contours");
+  ImageNG *imageResultat= new ImageNG();
+  *imageResultat =Traitements::Dilatation(image,3) ;
+  *imageResultat=*imageResultat -Traitements::Erosion(image,3);
+  imageResultat->setNom("joconde-contours");
 
-  cout << "Voici l'image contours : " << imageResultat << endl; imageResultat.Dessine();
-}*/
+  cout << "Voici l'image contours : " << *imageResultat << endl; imageResultat->Dessine();
+}
 
 //*******************************************************************************************************
 /*void Essai7()

@@ -1,6 +1,7 @@
 #include "Traitements.h"
 #include "SortedArrayList.h"
-#include <algorithm>
+#include "Iterateur.h"
+#include <climits>
 
 
 ImageB Traitements::Seuillage(const ImageNG& imageIn, int seuil)
@@ -120,7 +121,7 @@ ImageNG Traitements::Erosion(const ImageNG& imageIn, int taille)
         {
             for(int y=0; y<imageIn.getDimension().getHauteur();y++)
             {
-                SortedArrayList<int> liste;
+                int min = INT_MAX;
                 //y=4 x=2
                 for(int i=x-reculer; i<(x-reculer+taille);i++)
                 {
@@ -133,15 +134,16 @@ ImageNG Traitements::Erosion(const ImageNG& imageIn, int taille)
                         else 
                         {
                             // Le point est dans la matrice
-                            liste.insereElement(imageIn.getPixel(i,j));
-                            
+                            //liste.insereElement(imageIn.getPixel(i,j));
+                            if(imageIn.getPixel(i,j) < min)
+                            {
+                                min=imageIn.getPixel(i,j);
+                            }
                         }
                     }
                 }
                 //set new pixel moyenner a imageOut
-                Iterateur<int> it(liste);
-                int *min = min_element(&liste.getElement(0),&liste.getElement(liste.getNombreElements()-1) ) ;
-                imageOut.setPixel(x,y,liste.getElement(*min));
+                imageOut.setPixel(x,y,min);
             }
         }
         return imageOut;
@@ -160,7 +162,7 @@ ImageNG Traitements::Dilatation(const ImageNG& imageIn, int taille)
         {
             for(int y=0; y<imageIn.getDimension().getHauteur();y++)
             {
-                SortedArrayList<int> liste;
+                int max = INT_MIN;
                 //y=4 x=2
                 for(int i=x-reculer; i<(x-reculer+taille);i++)
                 {
@@ -173,13 +175,16 @@ ImageNG Traitements::Dilatation(const ImageNG& imageIn, int taille)
                         else 
                         {
                             // Le point est dans la matrice
-                            liste.insereElement(imageIn.getPixel(i,j));
+                            //liste.insereElement(imageIn.getPixel(i,j));
+                            if(imageIn.getPixel(i,j) > max)
+                            {
+                                max=imageIn.getPixel(i,j);
+                            }
                         }
                     }
                 }
                 //set new pixel moyenner a imageOut
-                int *max = max_element(&liste.getElement(0),&liste.getElement(liste.getNombreElements()-1) );
-                imageOut.setPixel(x,y,liste.getElement(*max));
+                imageOut.setPixel(x,y,max);
             }
         }
         return imageOut;
