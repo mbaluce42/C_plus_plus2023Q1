@@ -1,7 +1,6 @@
 #include "SortedArrayList.h"
 
 
-
 /*constructeur par defaut*/
 template <class T>
 SortedArrayList<T>::SortedArrayList(): ArrayList<T>()// Constructeur par défaut
@@ -29,7 +28,7 @@ SortedArrayList<T>::~SortedArrayList() // Destructeur
 }
 
 
-template <class T>
+/*template <class T>
 void SortedArrayList<T>::insereElement(const T& val)
 {
     //cree new cellule (cree un new espace dans la memoire)
@@ -38,21 +37,21 @@ void SortedArrayList<T>::insereElement(const T& val)
     //assigne val au new cellule
     nouvelCellule->valeur= val;
 
-    if(estVide()==true)
+    if(this->estVide()==true)
     {
         //on add au debut ou fin (pareil car liste vide ), ducoup aucun element au suivant(a la fin) 
         nouvelCellule->suivant= NULL;
-        pTete=nouvelCellule;
+        this->pTete=nouvelCellule;
     }
     else
     {
         //parcour SortedarrayList avec pointeur temp pour arriver a la fin et on insert le new elem
-        Cellule<T>* temp = pTete;
+        Cellule<T>* temp = this->pTete;
         Cellule<T>* tempPrec = NULL;
 
         while(temp->suivant != NULL && nouvelCellule->valeur > temp->valeur )
         {
-            tempPrec= temp:
+            tempPrec= temp;
             temp= temp->suivant; 
         }
         if(nouvelCellule->valeur <= temp->valeur)
@@ -61,7 +60,7 @@ void SortedArrayList<T>::insereElement(const T& val)
             if(tempPrec==NULL)
             {
                 //ajout debut
-                pTete= nouvelCellule;
+                this->pTete= nouvelCellule;
             }
             else// !=null
             {
@@ -78,6 +77,41 @@ void SortedArrayList<T>::insereElement(const T& val)
         }
         
     }
+}*/
+
+template <class T>
+void SortedArrayList<T>::insereElement(const T& val)
+{
+    // Crée une nouvelle cellule (cree un nouvel espace dans la memoire)
+    Cellule<T>* nouvelleCellule = new Cellule<T>;
+    
+    // Assigne val à la nouvelle cellule
+    nouvelleCellule->valeur = val;
+    
+    if (this->estVide() || val <= this->pTete->valeur)
+    {
+        // Ajout au début ou à une liste vide
+        nouvelleCellule->suivant = this->pTete;
+        this->pTete = nouvelleCellule;
+    }
+    else
+    {
+        // Parcours de la SortedArrayList avec un pointeur temp pour arriver à la fin
+        Cellule<T>* temp = this->pTete;
+        Cellule<T>* tempPrec = NULL;
+        
+        // Cherche l'endroit où insérer la nouvelle cellule
+        while (temp != NULL && val > temp->valeur)
+        {
+            tempPrec = temp;
+            temp = temp->suivant;
+        }
+        
+        // Ajout au milieu ou à la fin
+        nouvelleCellule->suivant = temp;
+        tempPrec->suivant = nouvelleCellule;
+    }
 }
+
 
 template class SortedArrayList<int>;

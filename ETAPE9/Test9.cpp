@@ -36,10 +36,10 @@ int main(int argc,char* argv[])
     {
       case 1 : Essai1(); break;
       case 2 : Essai2(); break;
-      /*case 3 : Essai3(); break;
+      case 3 : Essai3(); break;
       case 4 : Essai4(); break;
       case 5 : Essai5(); break;
-      case 6 : Essai6(); break;
+      /*case 6 : Essai6(); break;
       case 7 : Essai7(); break;*/
       default : fini = true ; break;
     }
@@ -99,23 +99,23 @@ void Essai2()
   image.setNom("lena");
   cout << "Voici l'image de départ : " << image << endl; image.Dessine();
 
-  ImageNG imageFiltree;
-  imageFiltree = Traitements::FiltreMoyenneur(image,3);
+  ImageNG *imageFiltree= new ImageNG();
+  *imageFiltree = Traitements::FiltreMoyenneur(image,5);
 
-  cout << "Voici l'image filtree : " << imageFiltree << endl; imageFiltree.Dessine();
+  cout << "Voici l'image filtree : " << *imageFiltree << endl; imageFiltree->Dessine();
 
   ImageNG image2("../images/mandrill.bmp");
   image2.setNom("mandrill");
   cout << "Voici l'image de départ : " << image2 << endl; image2.Dessine();
 
-  ImageNG imageFiltree2;
-  imageFiltree2 = Traitements::FiltreMoyenneur(image,11);
+  ImageNG *imageFiltree2= new ImageNG();
+  *imageFiltree2 = Traitements::FiltreMoyenneur(image2,11);
 
-  cout << "Voici l'image filtree : " << imageFiltree2 << endl; imageFiltree2.Dessine();
+  cout << "Voici l'image filtree : " << *imageFiltree2 << endl; imageFiltree2->Dessine();
 }
 
 //*******************************************************************************************************
-/*void Essai3()
+void Essai3()
 {
   cout << "***** 3. Test du filtre median sur une ImageNG ********************************************" << endl;
 
@@ -128,14 +128,14 @@ void Essai2()
   cin >> taille;
   cin.ignore();
 
-  ImageNG imageFiltree;
-  imageFiltree = Traitements::FiltreMedian(image,taille);
+  ImageNG *imageFiltree= new ImageNG();
+  *imageFiltree = Traitements::FiltreMedian(image,taille);
 
-  cout << "Voici l'image filtree : " << imageFiltree << endl; imageFiltree.Dessine();
-}*/
+  cout << "Voici l'image filtree : " << *imageFiltree << endl; imageFiltree->Dessine();
+}
 
 //*******************************************************************************************************
-/*void Essai4()
+void Essai4()
 {
   cout << "***** 4. Test de l'erosion sur une ImageNG ********************************************" << endl;
 
@@ -152,10 +152,10 @@ void Essai2()
   imageFiltree = Traitements::Erosion(image,taille);
 
   cout << "Voici l'image erodee : " << imageFiltree << endl; imageFiltree.Dessine();
-}*/
+}
 
 //*******************************************************************************************************
-/*void Essai5()
+void Essai5()
 {
   cout << "***** 5. Test de la dilatation sur une ImageNG ********************************************" << endl;
 
@@ -172,7 +172,7 @@ void Essai2()
   imageFiltree = Traitements::Dilatation(image,taille);
 
   cout << "Voici l'image dilatee : " << imageFiltree << endl; imageFiltree.Dessine();
-}*/
+}
 
 //*******************************************************************************************************
 /*void Essai6()

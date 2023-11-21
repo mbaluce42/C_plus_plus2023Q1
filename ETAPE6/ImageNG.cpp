@@ -352,7 +352,7 @@ bool ImageNG::operator==(const ImageNG& other) const
 {
     if((*this).getDimension().getLargeur() != other.getDimension().getLargeur() && (*this).getDimension().getHauteur() != other.getDimension().getHauteur())
     {
-        throw XYException("Dimension invalide !",'d');
+        throw XYException("Dimension invalide !",'d');4
     }
     else if((*this).getDimension().getLargeur() != other.getDimension().getLargeur()){throw XYException("Dimension invalide !",'x');}
     else {throw XYException("Dimension invalide !",'y');}
