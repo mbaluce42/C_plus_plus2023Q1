@@ -190,3 +190,18 @@ ImageNG Traitements::Dilatation(const ImageNG& imageIn, int taille)
         return imageOut;
     }
 }
+
+ImageNG Traitements::Negatif(const ImageNG& imageIn)
+{
+    ImageNG imageOut(imageIn.getId(), imageIn.getNom() + "-negatif", imageIn.getDimension());
+    for(int x = 0; x < imageIn.getDimension().getLargeur(); x++)
+    {
+        for(int y = 0; y < imageIn.getDimension().getHauteur(); y++)
+        {
+            int pixel = imageIn.getPixel(x, y);
+            int negatif = 255 - pixel; // Calcul du négatif du pixel
+            imageOut.setPixel(x, y, negatif);
+        }
+    }
+    return imageOut;
+}

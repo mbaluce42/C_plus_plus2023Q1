@@ -40,7 +40,7 @@ int main(int argc,char* argv[])
       case 4 : Essai4(); break;
       case 5 : Essai5(); break;
       case 6 : Essai6(); break;
-      //case 7 : Essai7(); break;
+      case 7 : Essai7(); break;
       default : fini = true ; break;
     }
   }
@@ -192,7 +192,7 @@ void Essai6()
 }
 
 //*******************************************************************************************************
-/*void Essai7()
+void Essai7()
 {
   cout << "***** 7. Test du negatif sur une ImageNG ************************************" << endl;
 
@@ -204,5 +204,5 @@ void Essai6()
   negatif = Traitements::Negatif(image);
 
   cout << "Voici l'image negatif : " << negatif << endl; negatif.Dessine();
-}*/
+}
 
