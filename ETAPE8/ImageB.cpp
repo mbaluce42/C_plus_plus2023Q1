@@ -6,8 +6,8 @@
 #include <fstream>
 
 
-Couleur ImageB::couleurTrue(0,0,0);
-Couleur ImageB::couleurFalse(255,255,255);
+Couleur ImageB::couleurTrue(255,255,255);
+Couleur ImageB::couleurFalse(0,0,0);
 
 ImageB::ImageB():Image()
 {

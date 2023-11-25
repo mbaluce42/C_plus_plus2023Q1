@@ -8,12 +8,10 @@ int PhotoShop::numCourant = 1;
 
 PhotoShop::PhotoShop()
 {
-    images = ArrayList<Image*>();
     #ifdef DEBUG
     cout << "Je suis le constructeur par defaut de PhotoShop" << endl<<endl;
     #endif
 }
-
 
 PhotoShop::~PhotoShop()
 {
@@ -24,13 +22,11 @@ PhotoShop::~PhotoShop()
     #endif
 }
 
-
 void PhotoShop::reset()
 {
-    images= ArrayList<Image*>();// Vidage de la liste d'images
+    images= ArrayList<Image *>();// Vidage de la liste d'images
     numCourant = 1; // Remise à 1 de la variable statique
 }
-
 
 void PhotoShop::ajouteImage(Image* pImage)
 {
@@ -39,14 +35,13 @@ void PhotoShop::ajouteImage(Image* pImage)
     numCourant++;
 }
 
-
 void PhotoShop::afficheImages() const
 {
-    Iterateur<Image*> it(images);
+    Iterateur<Image *> it(images);
 
     while (!it.end())
     {
-        Image* image = it;  // Obtenez l'image pointée par l'itérateur
+        Image* image = (Image*)it;  // Obtenez l'image pointée par l'itérateur
         // Utilisez 'image' comme nécessaire, par exemple, affichez-le
         image->Affiche();
 
@@ -54,16 +49,14 @@ void PhotoShop::afficheImages() const
     }
 }
 
-
-
 void PhotoShop::dessineImages() const
 {
-    Iterateur<Image*> it(images);
+    Iterateur<Image *> it(images);
 
     while (!it.end())
     {
-        Image* image = it;  // Obtenez l'image pointée par l'itérateur
-        // Utilisez 'image' comme nécessaire, par exemple, affichez-le
+        Image* image = (Image*)it;  // Obtenez l'image pointée par l'itérateur
+    
         image->Dessine();
 
         it++;  // Passez à l'élément suivant
@@ -73,24 +66,47 @@ void PhotoShop::dessineImages() const
 
 Image* PhotoShop::getImageParIndice(int indice)
 {
-
-
+   return images.getElement(indice);
 }
 
 
 Image* PhotoShop::getImageParId(int id)
 {
-
+    Iterateur<Image *> it(images);
+    while (!it.end())
+    {
+        Image* image = (Image*)it;  // Obtenez l'image pointée par l'itérateur    
+        if(image->getId()==id)
+        {
+            return &(*image);
+        }
+        it++;  // Passez à l'élément suivant
+    }
+    return NULL;
 }
 
 
 void PhotoShop::supprimeImageParIndice(int ind)
 {
+    images.retireElement(ind);
 
 }
 
 
 void PhotoShop::supprimeImageParId(int id)
 {
+    Iterateur<Image *> it(images);
+    int cpt=0;
 
+    while (!it.end())
+    {
+        Image* image = (Image*)it;  // Obtenez l'image pointée par l'itérateur    
+        if(image->getId()==id)
+        {
+            images.retireElement(cpt);
+            break;
+        }
+        cpt++;
+        it++;  // Passez à l'élément suivant
+    }
 }

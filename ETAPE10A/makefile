@@ -3,8 +3,8 @@ PROGAMS = Test10a TestSortedArrayList
 
 all: $(PROGAMS)
 
-Test9:	Test10a.cpp ImageNG.o Image.o ImageRGB.o ImageB.o Dimension.o Couleur.o ArrayList.o SortedArrayList.o Iterateur.o Traitements.o PhotoShop.o MyQT.o Exception.o RGBException.o XYException.o
-		g++ Test10a.cpp -o Test9 MyQT.o ImageNG.o Image.o ImageRGB.o ImageB.o Dimension.o Couleur.o ArrayList.o SortedArrayList.o Iterateur.o Traitements.o PhotoShop.o Exception.o RGBException.o XYException.o -lSDL -lpthread -Wl,-O1 -pipe -O2 -std=gnu++11 -Wall -W -D_REENTRANT -fPIC -DQT_DEPRECATED_WARNINGS -DQT_NO_DEBUG -DQT_WIDGETS_LIB -DQT_GUI_LIB -I.DQT_CORE_LIB -isystem      /usr/include/qt5      -isystem /usr/include/qt5/QtWidgets -isystem  /usr/include/qt5/QtGui  -isystem /usr/include/qt5/QtCore -I. -I. -I/usr/lib64/qt5/mkspecs/linux-g++ /usr/lib64/libQt5Gui.so /usr/lib64/libQt5Widgets.so /usr/lib64/libQt5Core.so /usr/lib64/libGL.so -DDEBUG
+Test10a:	Test10a.cpp ImageNG.o Image.o ImageRGB.o ImageB.o Dimension.o Couleur.o ArrayList.o SortedArrayList.o Iterateur.o Traitements.o PhotoShop.o MyQT.o Exception.o RGBException.o XYException.o
+		g++ Test10a.cpp -o Test10a MyQT.o ImageNG.o Image.o ImageRGB.o ImageB.o Dimension.o Couleur.o ArrayList.o SortedArrayList.o Iterateur.o Traitements.o PhotoShop.o Exception.o RGBException.o XYException.o -lSDL -lpthread -Wl,-O1 -pipe -O2 -std=gnu++11 -Wall -W -D_REENTRANT -fPIC -DQT_DEPRECATED_WARNINGS -DQT_NO_DEBUG -DQT_WIDGETS_LIB -DQT_GUI_LIB -I.DQT_CORE_LIB -isystem      /usr/include/qt5      -isystem /usr/include/qt5/QtWidgets -isystem  /usr/include/qt5/QtGui  -isystem /usr/include/qt5/QtCore -I. -I. -I/usr/lib64/qt5/mkspecs/linux-g++ /usr/lib64/libQt5Gui.so /usr/lib64/libQt5Widgets.so /usr/lib64/libQt5Core.so /usr/lib64/libGL.so -DDEBUG
 
 TestSortedArrayList:	TestSortedArrayList.cpp SortedArrayList.o ArrayList.o Couleur.o RGBException.o Exception.o
 						g++ TestSortedArrayList.cpp -o TestSortedArrayList SortedArrayList.o ArrayList.o Couleur.o RGBException.o Exception.o

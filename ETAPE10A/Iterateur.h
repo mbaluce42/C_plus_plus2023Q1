@@ -9,7 +9,7 @@ template<class T>
 class Iterateur
 {
 private:
-     ArrayList<T>& pListe;
+    const ArrayList<T>& pListe;
     Cellule<T>* pElement;
     
 public:
