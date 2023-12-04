@@ -12,7 +12,11 @@ PhotoShop& PhotoShop::getInstance()
     return instance;
 }
 
-PhotoShop::PhotoShop()
+ArrayList<Image*>* PhotoShop::getImages() 
+{ return &images; }
+
+
+PhotoShop::PhotoShop():images()
 {
     #ifdef DEBUG
     cout << "Je suis le constructeur par defaut de PhotoShop" << endl<<endl;

@@ -14,11 +14,14 @@ private:
     static PhotoShop instance;
     PhotoShop(const PhotoShop& old);
     PhotoShop& operator=(const PhotoShop& old);
+    
+
 
 public:
     
     ~PhotoShop();
     static PhotoShop& getInstance();
+    ArrayList<Image*>* getImages();
 
     void reset();
     void ajouteImage(Image* pImage);

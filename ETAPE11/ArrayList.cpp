@@ -216,3 +216,4 @@ ArrayList<T>& ArrayList<T>::operator=(const ArrayList& old)
 template class ArrayList<int>;
 template class ArrayList<Couleur>;
 template class ArrayList<Image *>;
+template class ArrayList<string>;

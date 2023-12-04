@@ -52,3 +52,4 @@ T& Iterateur<T>::operator&()
 template class Iterateur<int>;
 template class Iterateur<Couleur>;
 template class Iterateur<Image *>;
+template class Iterateur<string>;

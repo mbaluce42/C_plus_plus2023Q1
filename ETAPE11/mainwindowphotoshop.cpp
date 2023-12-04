@@ -18,6 +18,7 @@
 #include "Traitements.h"
 #include "XYException.h"
 
+ArrayList<string> TypeTupleTableImages = ArrayList<string>();
 
 MainWindowPhotoShop::MainWindowPhotoShop(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWindowPhotoShop)
 {
@@ -74,7 +75,7 @@ MainWindowPhotoShop::MainWindowPhotoShop(QWidget *parent) : QMainWindow(parent),
     // Restauration bibliothèque via fichier de sauvegarde
 
     // TESTS DEMOS A SUPPRIMER
-    ajouteTupleTableImages(3,"NG","256x256","lena.bmp");
+    //ajouteTupleTableImages(3,"NG","256x256","lena.bmp");
     setResultatBoolean(1);
 }
 
@@ -407,61 +408,163 @@ void MainWindowPhotoShop::on_actionCharger_ImageNB_triggered()
 {
   // Etape 11 (TO DO)
   string nomF= dialogueDemandeFichierOuvrir("Quel est le nom du fichier de l'imageNB à charger ?");
-  if(nomF==""){
+  if(nomF.compare("")==0){
       dialogueErreur("Erreur","Nom de fichier vide");
       return;
   }
-  else
+  else 
   {
-    ImageNG *img= new ImageNG(nomF);
+    ImageNG *img= new ImageNG(nomF.c_str());
     if(img==NULL){
         dialogueErreur("Erreur","Image non chargée");
         return;
     }
     else
     {
-      PhotoShop& p= PhotoShop::getInstance();
-      p.ajouteImage(img);
-      //PhotoShop::getInstance().ajouteImage(img);
-      Image* images = p.getImageParIndice(0);
+      PhotoShop::getInstance().ajouteImage(img);
+      TypeTupleTableImages.insereElement("NG");
       videTableImages();
-      Iterateur<Image*> it(images);
-      while(!it.end())
+      Iterateur<Image*> it( *(PhotoShop::getInstance().getImages()));
+      Iterateur<string> itType( TypeTupleTableImages);
+      while(!it.end() || !itType.end())
       {
-        Image* img=(Image*)it;
-          ajouteTupleTableImages(img->getId(),"NG",to_string(img->getDimension().getHauteur())+ 'x'+ to_string(img->getDimension().getLargeur()),img->getNom());
+          Image* img=(Image*)it;
+          string type=(string)itType;
+        
+          ajouteTupleTableImages(img->getId(),type,to_string(img->getDimension().getHauteur())+ 'x'+ to_string(img->getDimension().getLargeur()),img->getNom());
           it++;
+          itType++;
       }
     }
   }
+  dialogueMessage("Succès","ImageNG chargée");
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 void MainWindowPhotoShop::on_actionCharger_ImageRGB_triggered()
 {
   // Etape 11 (TO DO)
-
+  string nomF= dialogueDemandeFichierOuvrir("Quel est le nom du fichier de l'imageRGB à charger ?");
+  if(nomF.compare("")==0){dialogueErreur("Erreur","Nom de fichier vide");return;}
+  else 
+  {
+    ImageRGB *img= new ImageRGB(nomF.c_str());
+    if(img==NULL){dialogueErreur("Erreur","Image non chargée");return;}
+    else
+    {
+      cout<< endl<<"Nom image: "<<img->getNom( );// a modifier car il prend tout le path au lieu du nom
+      PhotoShop::getInstance().ajouteImage(img);
+      TypeTupleTableImages.insereElement("RGB");
+      videTableImages();
+      Iterateur<Image*> it( *(PhotoShop::getInstance().getImages()));
+      Iterateur<string> itType( TypeTupleTableImages);
+      while(!it.end() || !itType.end())
+      {
+        Image* img=(Image*)it;
+        string type=(string)itType;
+        ajouteTupleTableImages(img->getId(),type,to_string(img->getDimension().getHauteur())+ 'x'+ to_string(img->getDimension().getLargeur()),img->getNom());
+        it++;
+        itType++;
+      }
+    }
+  }
+  dialogueMessage("Succès","ImageRGB chargée");
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 void MainWindowPhotoShop::on_actionEnregistrer_ImageNB_triggered()
 {
   // Etape 11 (TO DO)
-
+  int indice = getIndiceImageSelectionnee();
+  if (indice== -1){dialogueErreur("Erreur","Aucune image selectionnée");return;}
+  else
+  {
+    if(TypeTupleTableImages.getElement(indice)!= "NG"){dialogueErreur("Erreur","Image non NG");return;} 
+    Image* img= PhotoShop::getInstance().getImageParIndice(indice);
+    if(img==NULL){dialogueErreur("Erreur","Image non chargée");return;}
+    else
+    {
+      string nomF= dialogueDemandeFichierEnregistrer("Quel est le nom du fichier de l'imageNG à enregistrer ?");
+      if(nomF.compare("")==0){dialogueErreur("Erreur","Nom de fichier vide");return;}
+      else 
+      {
+        ImageNG* imgNG= (ImageNG*)img;//downcasting 
+        string format= dialogueDemandeTexte("Format","Quel est le format de l'image à enregistrer ?\n tapper 1=JPG, 2=BMP, 3=PNG)");
+        if(format.compare("")==0 ){dialogueErreur("Erreur","Format de fichier vide");return;}
+        else if (format == "1") {format = "jpg";} 
+        else if (format == "2") {format = "bmp";}
+        else if (format == "3") {format = "png";} 
+        else {dialogueErreur("Erreur", "Format de fichier invalide");return;}
+        nomF.append("."+format);
+        imgNG->exportToFile(nomF.c_str(),format.c_str());
+      }
+    }
+  }
+  dialogueMessage("Succès","ImageNG enregistrée");
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 void MainWindowPhotoShop::on_actionEnregistrer_ImageRGB_triggered()
 {
   // Etape 11 (TO DO)
-
+  int indice = getIndiceImageSelectionnee();
+  if (indice== -1){dialogueErreur("Erreur","Aucune image selectionnée");return;}
+  else
+  {
+    if(TypeTupleTableImages.getElement(indice)!= "RGB"){dialogueErreur("Erreur","Image non RGB");return;} 
+    Image* img= PhotoShop::getInstance().getImageParIndice(indice);
+    if(img==NULL){dialogueErreur("Erreur","Image non chargée");return;}
+    else
+    {
+      string nomF= dialogueDemandeFichierEnregistrer("Quel est le nom du fichier de l'imageRGB à enregistrer ?");
+      if(nomF.compare("")==0){dialogueErreur("Erreur","Nom de fichier vide");return;}
+      else 
+      {
+        ImageRGB* imgRGB= (ImageRGB*)img;//downcasting 
+        string format= dialogueDemandeTexte("Format","Quel est le format de l'image à enregistrer ?\n tapper 1=JPG, 2=BMP, 3=PNG)");
+        if(format.compare("")==0 ){dialogueErreur("Erreur","Format de fichier vide");return;}
+        else if (format == "1") {format = "jpg";} 
+        else if (format == "2") {format = "bmp";}
+        else if (format == "3") {format = "png";} 
+        else {dialogueErreur("Erreur", "Format de fichier invalide");return;}
+        nomF.append("."+format);
+        imgRGB->exportToFile(nomF.c_str(),format.c_str());
+      }
+    }
+  }
+  dialogueMessage("Succès","ImageRGB enregistrée");
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 void MainWindowPhotoShop::on_actionEnregistrer_ImageB_triggered()
 {
   // Etape 11 (TO DO)
-
+  int indice = getIndiceImageSelectionnee();
+  if (indice== -1){dialogueErreur("Erreur","Aucune image selectionnée");return;}
+  else
+  {
+    if(TypeTupleTableImages.getElement(indice)!= "B"){dialogueErreur("Erreur","Image non B");return;} 
+    Image* img= PhotoShop::getInstance().getImageParIndice(indice);
+    if(img==NULL){dialogueErreur("Erreur","Image non chargée");return;}
+    else
+    {
+      string nomF= dialogueDemandeFichierEnregistrer("Quel est le nom du fichier de l'imageB à enregistrer ?");
+      if(nomF.compare("")==0){dialogueErreur("Erreur","Nom de fichier vide");return;}
+      else 
+      {
+        ImageB* imgB= (ImageB*)img;//downcasting 
+        string format= dialogueDemandeTexte("Format","Quel est le format de l'image à enregistrer ?\n tapper 1=JPG, 2=BMP, 3=PNG)");
+        if(format.compare("")==0 ){dialogueErreur("Erreur","Format de fichier vide");return;}
+        else if (format == "1") {format = "jpg";} 
+        else if (format == "2") {format = "bmp";}
+        else if (format == "3") {format = "png";} 
+        else {dialogueErreur("Erreur", "Format de fichier invalide");return;}
+        nomF.append("."+format);
+        imgB->exportToFile(nomF.c_str(),format.c_str());
+      }
+    }
+  }
+  dialogueMessage("Succès","ImageB enregistrée");
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////

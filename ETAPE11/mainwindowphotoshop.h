@@ -23,6 +23,7 @@ public:
     MainWindowPhotoShop(QWidget *parent = nullptr);
     ~MainWindowPhotoShop();
 
+    Image* getPlisteImages();
     // Méthodes de la fenêtre
     void   setTitre(string titre);
     void   setNomImage(string nom);
