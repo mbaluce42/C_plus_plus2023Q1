@@ -114,6 +114,8 @@ void PhotoShop::supprimeImageParId(int id)
         if(image->getId()==id)
         {
             images.retireElement(cpt);
+            //delete image;
+
             break;
         }
         cpt++;

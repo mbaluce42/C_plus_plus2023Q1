@@ -1,5 +1,6 @@
 #include "ArrayList.h"
 #include "Couleur.h"
+#include "Image.h"
 
 
 
@@ -121,6 +122,8 @@ template <class T>
 T ArrayList<T>::retireElement(int ind)
 {
     //ind est errone ou arrayList est vide
+    cout <<endl<< "ind: "<<ind<<endl;
+    cout <<endl << "getNombreElements(): "<<getNombreElements()<<endl;
     if (ind<0 || ind>(getNombreElements()-1) || estVide()==true)
     {
         cout<<"ind errone ou arrayList vide"<<endl;//return NULL;
@@ -128,7 +131,7 @@ T ArrayList<T>::retireElement(int ind)
     else
     {
 
-        Cellule<T>* Pprecedent ;
+        Cellule<T>* Pprecedent=NULL ;
         Cellule<T>* Psuivant=pTete ;
         
         int cpt=0;
@@ -150,9 +153,17 @@ T ArrayList<T>::retireElement(int ind)
         //c'est que la val a supprimer ce trouve au premier element
         if(Pprecedent==NULL)
         {
-            pTete=Psuivant->suivant;
+            if(Psuivant->suivant==NULL)
+            {
+                pTete=NULL;
+            }
+            else
+            {
+                pTete=Psuivant->suivant;
+            }
+            //pTete=Psuivant->suivant;
         }
-        else
+        else if(Pprecedent!=NULL)
         {
             Pprecedent->suivant=Psuivant->suivant;
         }

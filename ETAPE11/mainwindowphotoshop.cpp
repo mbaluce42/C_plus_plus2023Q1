@@ -571,14 +571,54 @@ void MainWindowPhotoShop::on_actionEnregistrer_ImageB_triggered()
 void MainWindowPhotoShop::on_actionImage_selectionn_e_triggered()
 {
   // Etape 11 (TO DO)
-
+  int indice = getIndiceImageSelectionnee();
+  if (indice== -1){dialogueErreur("Erreur","Aucune image selectionnée");return;}
+  else
+  {
+    PhotoShop::getInstance().supprimeImageParIndice(indice);
+    TypeTupleTableImages.retireElement(indice);
+    
+    videTableImages();
+    Iterateur<Image*> it( *(PhotoShop::getInstance().getImages()));
+    Iterateur<string> itType( TypeTupleTableImages);
+    while(!it.end() || !itType.end())
+    {
+      Image* img=(Image*)it;
+      string type=(string)itType;
+      ajouteTupleTableImages(img->getId(),type,to_string(img->getDimension().getHauteur())+ 'x'+ to_string(img->getDimension().getLargeur()),img->getNom());
+      it++;
+      itType++;
+    } 
+  }
+  dialogueMessage("Succès","Image supprimée");
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 void MainWindowPhotoShop::on_actionImage_par_id_triggered()
 {
   // Etape 11 (TO DO)
+  int id=dialogueDemandeInt("Image par id","Quel est l'id de l'image à afficher ?");
+  if(id<=0){dialogueErreur("Erreur","Id invalide");return;}
+  else if(PhotoShop::getInstance().getImageParId(id)==NULL){dialogueErreur("Erreur",("Image avec id("+to_string(id)+") existe pas").c_str());return;}
+  else
+  {
 
+    PhotoShop::getInstance().supprimeImageParId(id);
+    TypeTupleTableImages.retireElement(id-1);
+    
+    videTableImages();
+    Iterateur<Image*> it( *(PhotoShop::getInstance().getImages()));
+    Iterateur<string> itType( TypeTupleTableImages);
+    while(!it.end() || !itType.end())
+    {
+      Image* img=(Image*)it;
+      string type=(string)itType;
+      ajouteTupleTableImages(img->getId(),type,to_string(img->getDimension().getHauteur())+ 'x'+ to_string(img->getDimension().getLargeur()),img->getNom());
+      it++;
+      itType++;
+    } 
+    dialogueMessage("Succès","Image supprimée");
+  }
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
