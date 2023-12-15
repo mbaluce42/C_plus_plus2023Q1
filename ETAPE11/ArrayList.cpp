@@ -124,7 +124,7 @@ T ArrayList<T>::retireElement(int ind)
     //ind est errone ou arrayList est vide
     cout <<endl<< "ind: "<<ind<<endl;
     cout <<endl << "getNombreElements(): "<<getNombreElements()<<endl;
-    if (ind<0 || ind>(getNombreElements()-1) || estVide()==true)
+    if (ind<0 || ind>=(getNombreElements()) || estVide()==true)
     {
         cout<<"ind errone ou arrayList vide"<<endl;//return NULL;
     }

@@ -425,15 +425,18 @@ void MainWindowPhotoShop::on_actionCharger_ImageNB_triggered()
       TypeTupleTableImages.insereElement("NG");
       videTableImages();
       Iterateur<Image*> it( *(PhotoShop::getInstance().getImages()));
-      Iterateur<string> itType( TypeTupleTableImages);
-      while(!it.end() || !itType.end())
+      while(!it.end())
       {
           Image* img=(Image*)it;
-          string type=(string)itType;
-        
-          ajouteTupleTableImages(img->getId(),type,to_string(img->getDimension().getHauteur())+ 'x'+ to_string(img->getDimension().getLargeur()),img->getNom());
+          if( dynamic_cast<ImageNG*>(img) !=NULL)
+          {
+            ajouteTupleTableImages(img->getId(),"NG",to_string(img->getDimension().getHauteur())+ 'x'+ to_string(img->getDimension().getLargeur()),img->getNom());
+          }
+          else
+          {
+            ajouteTupleTableImages(img->getId(),"RGB",to_string(img->getDimension().getHauteur())+ 'x'+ to_string(img->getDimension().getLargeur()),img->getNom());
+          }        
           it++;
-          itType++;
       }
     }
   }
@@ -457,14 +460,18 @@ void MainWindowPhotoShop::on_actionCharger_ImageRGB_triggered()
       TypeTupleTableImages.insereElement("RGB");
       videTableImages();
       Iterateur<Image*> it( *(PhotoShop::getInstance().getImages()));
-      Iterateur<string> itType( TypeTupleTableImages);
-      while(!it.end() || !itType.end())
+      while(!it.end())
       {
         Image* img=(Image*)it;
-        string type=(string)itType;
-        ajouteTupleTableImages(img->getId(),type,to_string(img->getDimension().getHauteur())+ 'x'+ to_string(img->getDimension().getLargeur()),img->getNom());
+        if(dynamic_cast<ImageRGB*>(img)!=NULL)
+        {
+          ajouteTupleTableImages(img->getId(),"RGB",to_string(img->getDimension().getHauteur())+ 'x'+ to_string(img->getDimension().getLargeur()),img->getNom());
+        }
+        else
+        {
+          ajouteTupleTableImages(img->getId(),"NG",to_string(img->getDimension().getHauteur())+ 'x'+ to_string(img->getDimension().getLargeur()),img->getNom());
+        }  
         it++;
-        itType++;
       }
     }
   }
@@ -479,7 +486,7 @@ void MainWindowPhotoShop::on_actionEnregistrer_ImageNB_triggered()
   if (indice== -1){dialogueErreur("Erreur","Aucune image selectionnée");return;}
   else
   {
-    if(TypeTupleTableImages.getElement(indice)!= "NG"){dialogueErreur("Erreur","Image non NG");return;} 
+    if( dynamic_cast<ImageNG*>(PhotoShop::getInstance().getImageParIndice(indice)) != NULL ){dialogueErreur("Erreur","Image non NG");return;} 
     Image* img= PhotoShop::getInstance().getImageParIndice(indice);
     if(img==NULL){dialogueErreur("Erreur","Image non chargée");return;}
     else
@@ -511,7 +518,7 @@ void MainWindowPhotoShop::on_actionEnregistrer_ImageRGB_triggered()
   if (indice== -1){dialogueErreur("Erreur","Aucune image selectionnée");return;}
   else
   {
-    if(TypeTupleTableImages.getElement(indice)!= "RGB"){dialogueErreur("Erreur","Image non RGB");return;} 
+    if( dynamic_cast<ImageRGB*>(PhotoShop::getInstance().getImageParIndice(indice)) != NULL ){dialogueErreur("Erreur","Image non RGB");return;} 
     Image* img= PhotoShop::getInstance().getImageParIndice(indice);
     if(img==NULL){dialogueErreur("Erreur","Image non chargée");return;}
     else
@@ -543,16 +550,14 @@ void MainWindowPhotoShop::on_actionEnregistrer_ImageB_triggered()
   if (indice== -1){dialogueErreur("Erreur","Aucune image selectionnée");return;}
   else
   {
-    if(TypeTupleTableImages.getElement(indice)!= "B"){dialogueErreur("Erreur","Image non B");return;} 
-    Image* img= PhotoShop::getInstance().getImageParIndice(indice);
-    if(img==NULL){dialogueErreur("Erreur","Image non chargée");return;}
+    ImageB* imgB= dynamic_cast<ImageB*>(PhotoShop::getInstance().getImageParIndice(indice));
+    if(imgB  != NULL ){dialogueErreur("Erreur","Image non B");return;} 
     else
     {
       string nomF= dialogueDemandeFichierEnregistrer("Quel est le nom du fichier de l'imageB à enregistrer ?");
       if(nomF.compare("")==0){dialogueErreur("Erreur","Nom de fichier vide");return;}
       else 
       {
-        ImageB* imgB= (ImageB*)img;//downcasting 
         string format= dialogueDemandeTexte("Format","Quel est le format de l'image à enregistrer ?\n tapper 1=JPG, 2=BMP, 3=PNG)");
         if(format.compare("")==0 ){dialogueErreur("Erreur","Format de fichier vide");return;}
         else if (format == "1") {format = "jpg";} 
@@ -580,14 +585,18 @@ void MainWindowPhotoShop::on_actionImage_selectionn_e_triggered()
     
     videTableImages();
     Iterateur<Image*> it( *(PhotoShop::getInstance().getImages()));
-    Iterateur<string> itType( TypeTupleTableImages);
-    while(!it.end() || !itType.end())
+    while(!it.end())
     {
       Image* img=(Image*)it;
-      string type=(string)itType;
-      ajouteTupleTableImages(img->getId(),type,to_string(img->getDimension().getHauteur())+ 'x'+ to_string(img->getDimension().getLargeur()),img->getNom());
+      if(dynamic_cast<ImageRGB*>(img)!=NULL)
+      {
+        ajouteTupleTableImages(img->getId(),"RGB",to_string(img->getDimension().getHauteur())+ 'x'+ to_string(img->getDimension().getLargeur()),img->getNom());
+      }
+      else
+      {
+        ajouteTupleTableImages(img->getId(),"NG",to_string(img->getDimension().getHauteur())+ 'x'+ to_string(img->getDimension().getLargeur()),img->getNom());
+      }  
       it++;
-      itType++;
     } 
   }
   dialogueMessage("Succès","Image supprimée");
@@ -608,14 +617,18 @@ void MainWindowPhotoShop::on_actionImage_par_id_triggered()
     
     videTableImages();
     Iterateur<Image*> it( *(PhotoShop::getInstance().getImages()));
-    Iterateur<string> itType( TypeTupleTableImages);
-    while(!it.end() || !itType.end())
+    while(!it.end())
     {
       Image* img=(Image*)it;
-      string type=(string)itType;
-      ajouteTupleTableImages(img->getId(),type,to_string(img->getDimension().getHauteur())+ 'x'+ to_string(img->getDimension().getLargeur()),img->getNom());
+      if(dynamic_cast<ImageRGB*>(img)!=NULL)
+      {
+        ajouteTupleTableImages(img->getId(),"RGB",to_string(img->getDimension().getHauteur())+ 'x'+ to_string(img->getDimension().getLargeur()),img->getNom());
+      }
+      else
+      {
+        ajouteTupleTableImages(img->getId(),"NG",to_string(img->getDimension().getHauteur())+ 'x'+ to_string(img->getDimension().getLargeur()),img->getNom());
+      }  
       it++;
-      itType++;
     } 
     dialogueMessage("Succès","Image supprimée");
   }

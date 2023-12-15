@@ -1,5 +1,5 @@
 
-PROGAMS = Test10a Test10b TestSortedArrayList
+PROGAMS = Test10b TestSortedArrayList
 
 all: $(PROGAMS)
 
