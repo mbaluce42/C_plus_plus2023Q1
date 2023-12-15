@@ -18,8 +18,6 @@
 #include "Traitements.h"
 #include "XYException.h"
 
-ArrayList<string> TypeTupleTableImages = ArrayList<string>();
-
 MainWindowPhotoShop::MainWindowPhotoShop(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWindowPhotoShop)
 {
     ui->setupUi(this);
@@ -422,7 +420,6 @@ void MainWindowPhotoShop::on_actionCharger_ImageNB_triggered()
     else
     {
       PhotoShop::getInstance().ajouteImage(img);
-      TypeTupleTableImages.insereElement("NG");
       videTableImages();
       Iterateur<Image*> it( *(PhotoShop::getInstance().getImages()));
       while(!it.end())
@@ -457,7 +454,6 @@ void MainWindowPhotoShop::on_actionCharger_ImageRGB_triggered()
     {
       cout<< endl<<"Nom image: "<<img->getNom( );// a modifier car il prend tout le path au lieu du nom
       PhotoShop::getInstance().ajouteImage(img);
-      TypeTupleTableImages.insereElement("RGB");
       videTableImages();
       Iterateur<Image*> it( *(PhotoShop::getInstance().getImages()));
       while(!it.end())
@@ -486,7 +482,7 @@ void MainWindowPhotoShop::on_actionEnregistrer_ImageNB_triggered()
   if (indice== -1){dialogueErreur("Erreur","Aucune image selectionnée");return;}
   else
   {
-    if( dynamic_cast<ImageNG*>(PhotoShop::getInstance().getImageParIndice(indice)) != NULL ){dialogueErreur("Erreur","Image non NG");return;} 
+    if( dynamic_cast<ImageNG*>(PhotoShop::getInstance().getImageParIndice(indice)) == NULL ){dialogueErreur("Erreur","Image non NG");return;} 
     Image* img= PhotoShop::getInstance().getImageParIndice(indice);
     if(img==NULL){dialogueErreur("Erreur","Image non chargée");return;}
     else
@@ -518,7 +514,7 @@ void MainWindowPhotoShop::on_actionEnregistrer_ImageRGB_triggered()
   if (indice== -1){dialogueErreur("Erreur","Aucune image selectionnée");return;}
   else
   {
-    if( dynamic_cast<ImageRGB*>(PhotoShop::getInstance().getImageParIndice(indice)) != NULL ){dialogueErreur("Erreur","Image non RGB");return;} 
+    if( dynamic_cast<ImageRGB*>(PhotoShop::getInstance().getImageParIndice(indice)) == NULL ){dialogueErreur("Erreur","Image non RGB");return;} 
     Image* img= PhotoShop::getInstance().getImageParIndice(indice);
     if(img==NULL){dialogueErreur("Erreur","Image non chargée");return;}
     else
@@ -551,7 +547,7 @@ void MainWindowPhotoShop::on_actionEnregistrer_ImageB_triggered()
   else
   {
     ImageB* imgB= dynamic_cast<ImageB*>(PhotoShop::getInstance().getImageParIndice(indice));
-    if(imgB  != NULL ){dialogueErreur("Erreur","Image non B");return;} 
+    if(imgB  == NULL ){dialogueErreur("Erreur","Image non B");return;} 
     else
     {
       string nomF= dialogueDemandeFichierEnregistrer("Quel est le nom du fichier de l'imageB à enregistrer ?");
@@ -581,7 +577,6 @@ void MainWindowPhotoShop::on_actionImage_selectionn_e_triggered()
   else
   {
     PhotoShop::getInstance().supprimeImageParIndice(indice);
-    TypeTupleTableImages.retireElement(indice);
     
     videTableImages();
     Iterateur<Image*> it( *(PhotoShop::getInstance().getImages()));
@@ -613,7 +608,6 @@ void MainWindowPhotoShop::on_actionImage_par_id_triggered()
   {
 
     PhotoShop::getInstance().supprimeImageParId(id);
-    TypeTupleTableImages.retireElement(id-1);
     
     videTableImages();
     Iterateur<Image*> it( *(PhotoShop::getInstance().getImages()));
@@ -668,7 +662,30 @@ void MainWindowPhotoShop::on_actionReset_triggered()
 void MainWindowPhotoShop::on_tableWidgetImages_itemSelectionChanged()
 {
   // Etape 11 (TO DO)
+  int indice = getIndiceImageSelectionnee();
+  if (indice== -1){/*dialogueErreur("Erreur","Aucune image selectionnée");*/return;}
+  else
+  {
+    ImageNG* imgNG= dynamic_cast<ImageNG*>(PhotoShop::getInstance().getImageParIndice(indice));
+    ImageRGB* imgRGB= dynamic_cast<ImageRGB*>(PhotoShop::getInstance().getImageParIndice(indice));
+    //vider
+    setImageNG("selection ");
+    setParametresImageNG();
+    setNomImage("");
 
+    if(imgNG != NULL)
+    {
+      setNomImage(imgNG->getNom()); 
+      setParametresImageNG(imgNG->getMaximun(),imgNG->getMinimum(), imgNG->getLuminance(), imgNG->getContraste());
+      setImageNG("selection",imgNG); 
+    }
+    
+    else if(imgRGB !=NULL)
+    {
+      setNomImage(imgRGB->getNom());
+      setImageRGB("selection",imgRGB);  
+    }
+  }
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -677,7 +694,31 @@ void MainWindowPhotoShop::on_tableWidgetImages_itemSelectionChanged()
 void MainWindowPhotoShop::on_pushButtonModifierNom_clicked()
 {
   // Etape 11 (TO DO)
+  int indice = getIndiceImageSelectionnee();
+  if (indice== -1){dialogueErreur("Erreur","Aucune image selectionnée");return;}
+  else
+  {
+    string tmp= getNomImage();
+    
+    if(PhotoShop::getInstance().getImageParIndice(indice)->getNom()== tmp){return;}
 
+    PhotoShop::getInstance().getImageParIndice(indice)->setNom(tmp);
+    videTableImages();
+    Iterateur<Image*> it( *(PhotoShop::getInstance().getImages()));
+    while(!it.end())
+    {
+      Image* img=(Image*)it;
+      if(dynamic_cast<ImageRGB*>(img)!=NULL)
+      {
+        ajouteTupleTableImages(img->getId(),"RGB",to_string(img->getDimension().getHauteur())+ 'x'+ to_string(img->getDimension().getLargeur()),img->getNom());
+      }
+      else
+      {
+        ajouteTupleTableImages(img->getId(),"NG",to_string(img->getDimension().getHauteur())+ 'x'+ to_string(img->getDimension().getLargeur()),img->getNom());
+      }  
+      it++;
+    }
+  }
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
