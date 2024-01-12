@@ -817,10 +817,9 @@ void MainWindowPhotoShop::on_pushButtonTraitement_clicked()
       if(PhotoShop::getInstance().operande1==NULL ){dialogueErreur("Erreur","Merci de bien vouloir sélectionner une image pour l'opérande 1"); return;}
       else
       {
-        
         if(getTraitementSelectionne().compare("Eclaircir (+ val)")==0)
-        {
-          if(dynamic_cast<ImageNG*>(PhotoShop::getInstance().operande1)==NULL){dialogueErreur("Erreur","Image non NG");return;}
+        { 
+          if(dynamic_cast<ImageNG*>(PhotoShop::getInstance().operande1)==NULL){dialogueErreur("Erreur","Operande 1 non NG");return;}
           int val= dialogueDemandeInt("Eclaircir (+ val)","Quel est la valeur de l'éclaircissement ?");
           if(val<=0){dialogueErreur("Erreur","Valeur invalide");return;}
           else
@@ -828,6 +827,7 @@ void MainWindowPhotoShop::on_pushButtonTraitement_clicked()
             ImageNG* result=new ImageNG(*dynamic_cast<ImageNG*>(PhotoShop::getInstance().operande1));//contructeur par copie
             *result = *result + val;
             setImageNG("resultat",result);
+            return;
           }
         }
         else if(getTraitementSelectionne().compare("Eclaircir (++)")==0)
@@ -854,13 +854,69 @@ void MainWindowPhotoShop::on_pushButtonTraitement_clicked()
           setImageNG("resultat",result);
         }
 
+        else if(getTraitementSelectionne().compare("Seuillage")==0)
+        {
+          int val= dialogueDemandeInt("Seuillage","Quel est la valeur du seuil ?");
+          if(val<=0){dialogueErreur("Erreur","Valeur invalide");return;}
+          else
+          {
+            ImageNG op1(ImageNG(*dynamic_cast<ImageNG*>(PhotoShop::getInstance().operande1)) );
+            //op1.setNom(op1.getNom());
+           // setImageNG("resultat",result);
+          }
+        }
+        else if(getTraitementSelectionne().compare("Filtre moyenneur")==0)
+        {
+          int val= dialogueDemandeInt("Filtre moyenneur","Quel est la valeur du filtre ?");
+          if(val<=0){dialogueErreur("Erreur","Valeur invalide");return;}
+          else
+          {
+            ImageNG* result=new ImageNG(*dynamic_cast<ImageNG*>(PhotoShop::getInstance().operande1));
+            *result = *result + val;
+            setImageNG("resultat",result);
+          }
+        }
+        else if(getTraitementSelectionne().compare("Filtre médian")==0)
+        {
+          int val= dialogueDemandeInt("Filtre médian","Quel est la valeur du filtre ?");
+          if(val<=0){dialogueErreur("Erreur","Valeur invalide");return;}
+          else
+          {
+            ImageNG* result=new ImageNG(*dynamic_cast<ImageNG*>(PhotoShop::getInstance().operande1));
+            *result = *result + val;
+            setImageNG("resultat",result);
+          }
+        }
+        else if(getTraitementSelectionne().compare("Erosion")==0)
+        {
+          int val= dialogueDemandeInt("Erosion","Quel est la valeur de l'érosion ?");
+          if(val<=0){dialogueErreur("Erreur","Valeur invalide");return;}
+          else
+          {
+            ImageNG* result=new ImageNG(*dynamic_cast<ImageNG*>(PhotoShop::getInstance().operande1));
+            *result = *result + val;
+            setImageNG("resultat",result);
+          }
+        }
+        else if(getTraitementSelectionne().compare("Dilatation")==0)
+        {
+          int val= dialogueDemandeInt("Dilatation","Quel est la valeur de la dilatation ?");
+          if(val<=0){dialogueErreur("Erreur","Valeur invalide");return;}
+          else
+          {
+            ImageNG* result=new ImageNG(*dynamic_cast<ImageNG*>(PhotoShop::getInstance().operande1));
+            *result = *result + val;
+            setImageNG("resultat",result);
+          }
+        }
+
         if(PhotoShop::getInstance().operande2==NULL ){dialogueErreur("Erreur","Merci de bien vouloir sélectionner une image pour l'opérande 2"); return;}
         else
         {
           if(getTraitementSelectionne().compare("Différence")==0)
           {
-            if(dynamic_cast<ImageNG*>(PhotoShop::getInstance().operande1)==NULL){dialogueErreur("Erreur","Image non NG");return;}
-            if(dynamic_cast<ImageNG*>(PhotoShop::getInstance().operande2)==NULL){dialogueErreur("Erreur","Image non NG");return;}
+            if(dynamic_cast<ImageNG*>(PhotoShop::getInstance().operande1)==NULL){dialogueErreur("Erreur","Operande 1 non NG");return;}
+            if(dynamic_cast<ImageNG*>(PhotoShop::getInstance().operande2)==NULL){dialogueErreur("Erreur","Operande 2 non NG");return;}
             //ImageNG* result = new ImageNG(dynamic_cast<ImageNG*>(PhotoShop::getInstance().operande1) - dynamic_cast<ImageNG*>(PhotoShop::getInstance().operande2));
             ImageNG* img1 = dynamic_cast<ImageNG*>(PhotoShop::getInstance().operande1);
             ImageNG* img2 = dynamic_cast<ImageNG*>(PhotoShop::getInstance().operande2);
@@ -869,34 +925,58 @@ void MainWindowPhotoShop::on_pushButtonTraitement_clicked()
           }
           else if(getTraitementSelectionne().compare("Comparaison (==)")==0)
           {
-            if(dynamic_cast<ImageNG*>(PhotoShop::getInstance().operande1)==NULL){dialogueErreur("Erreur","Image non NG");return;}
-            if(dynamic_cast<ImageNG*>(PhotoShop::getInstance().operande2)==NULL){dialogueErreur("Erreur","Image non NG");return;}
-            ImageNG* temp1 = dynamic_cast<ImageNG*>(PhotoShop::getInstance().operande1);
-            ImageNG* temp2 = dynamic_cast<ImageNG*>(PhotoShop::getInstance().operande2);
+            if(dynamic_cast<ImageNG*>(PhotoShop::getInstance().operande1)==NULL){dialogueErreur("Erreur","Operande 1 non NG");return;}
+            if(dynamic_cast<ImageNG*>(PhotoShop::getInstance().operande2)==NULL){dialogueErreur("Erreur","Operande 2 non NG");return;}
+            ImageNG* op1 = dynamic_cast<ImageNG*>(PhotoShop::getInstance().operande1);
+            ImageNG* op2 = dynamic_cast<ImageNG*>(PhotoShop::getInstance().operande2);
             
-            bool result = (*temp1 == *temp2);
-            //cout << endl << "resultat: " << result;
-            //setResultatBoolean(result);
+            try 
+            {
+              bool result = (*op1 == *op2);
+    
+              setResultatBoolean(result);
+            }
+            catch (XYException e)
+            {
+              dialogueErreur("Erreur",(e.getMessage() +"("+ e.getCoordonne()+")").c_str());
+              return;
+            }
+            
           }
           else if(getTraitementSelectionne().compare("Comparaison (<)")==0)
           {
-            if(dynamic_cast<ImageNG*>(PhotoShop::getInstance().operande1)==NULL){dialogueErreur("Erreur","Image non NG");return;}
-            if(dynamic_cast<ImageNG*>(PhotoShop::getInstance().operande2)==NULL){dialogueErreur("Erreur","Image non NG");return;}
-            ImageNG* img1 = dynamic_cast<ImageNG*>(PhotoShop::getInstance().operande1);
-            ImageNG* img2 = dynamic_cast<ImageNG*>(PhotoShop::getInstance().operande2);
-            
-            bool result = ((*img1) < (*img2));
-            setResultatBoolean(result);
-            
+            if(dynamic_cast<ImageNG*>(PhotoShop::getInstance().operande1)==NULL){dialogueErreur("Erreur","Operande 1 non NG");return;}
+            if(dynamic_cast<ImageNG*>(PhotoShop::getInstance().operande2)==NULL){dialogueErreur("Erreur","Operande 2 non NG");return;}
+            ImageNG* op1 = dynamic_cast<ImageNG*>(PhotoShop::getInstance().operande1);
+            ImageNG* op2 = dynamic_cast<ImageNG*>(PhotoShop::getInstance().operande2);
+            try
+            {
+              bool result = ((*op1) < (*op2));
+              setResultatBoolean(result);
+            }
+            catch (XYException e)
+            {
+              dialogueErreur("Erreur",(e.getMessage() +"("+ e.getCoordonne()+")").c_str());
+              return;
+            }
           }
           else if(getTraitementSelectionne().compare("Comparaison (>)")==0)
           {
-            if(dynamic_cast<ImageNG*>(PhotoShop::getInstance().operande1)==NULL){dialogueErreur("Erreur","Image non NG");return;}
-            if(dynamic_cast<ImageNG*>(PhotoShop::getInstance().operande2)==NULL){dialogueErreur("Erreur","Image non NG");return;}
-            ImageNG* img1 = dynamic_cast<ImageNG*>(PhotoShop::getInstance().operande1);
-            ImageNG* img2 = dynamic_cast<ImageNG*>(PhotoShop::getInstance().operande2);
-            bool result = ((*img1) > (*img2));
-            setResultatBoolean(result);
+            if(dynamic_cast<ImageNG*>(PhotoShop::getInstance().operande1)==NULL){dialogueErreur("Erreur","Operande 1 non NG");return;}
+            if(dynamic_cast<ImageNG*>(PhotoShop::getInstance().operande2)==NULL){dialogueErreur("Erreur","Operande 2 non NG");return;}
+            ImageNG* op1 = dynamic_cast<ImageNG*>(PhotoShop::getInstance().operande1);
+            ImageNG* op2 = dynamic_cast<ImageNG*>(PhotoShop::getInstance().operande2);
+      
+            try
+            {
+              bool result = ((*op1) > (*op2));
+              setResultatBoolean(result);
+            }
+            catch (XYException e)
+            {
+              dialogueErreur("Erreur",(e.getMessage() +"("+ e.getCoordonne()+")").c_str());
+              return;
+            }
           }
         }
       }

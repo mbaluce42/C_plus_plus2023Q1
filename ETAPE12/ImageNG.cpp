@@ -208,9 +208,9 @@ ostream& operator<<(ostream& os, const ImageNG& image)
 ImageNG ImageNG::operator+(int valeur) const 
 {
     ImageNG newImage(*this);
-    for (int x = 0; x <  newImage.getDimension().getLargeur(); ++x) 
+    for (int x = 0; x <  newImage.getDimension().getLargeur(); x++) 
     {
-        for (int y = 0; y < newImage.getDimension().getHauteur(); ++y) {
+        for (int y = 0; y < newImage.getDimension().getHauteur(); y++) {
             int niveauGris = newImage.getPixel(x, y);
             niveauGris += valeur;
             if(niveauGris > 255){ niveauGris=255;}
@@ -228,9 +228,9 @@ ImageNG operator+(int valeur,const ImageNG& i)
 ImageNG ImageNG::operator-(int valeur) const 
 {
     ImageNG newImage(*this);
-    for (int x = 0; x < newImage.getDimension().getLargeur(); ++x) 
+    for (int x = 0; x < newImage.getDimension().getLargeur(); x++) 
     {
-        for (int y = 0; y < newImage.getDimension().getHauteur(); ++y) 
+        for (int y = 0; y < newImage.getDimension().getHauteur(); y++) 
         {
             int niveauGris = newImage.getPixel(x, y);
             niveauGris -= valeur;
@@ -243,8 +243,8 @@ ImageNG ImageNG::operator-(int valeur) const
 
 ImageNG& ImageNG::operator++() 
 {
-    for (int x = 0; x < dimension.getLargeur(); ++x) {
-        for (int y = 0; y < dimension.getHauteur(); ++y) 
+    for (int x = 0; x < dimension.getLargeur(); x++) {
+        for (int y = 0; y < dimension.getHauteur(); y++) 
         {
             int pixel = matrice[x][y] + 20;
             if (pixel > 255) {matrice[x][y] = 255;} 
@@ -263,9 +263,9 @@ ImageNG ImageNG::operator++(int)
 
 ImageNG& ImageNG::operator--() 
 {
-    for (int x = 0; x < dimension.getLargeur(); ++x) 
+    for (int x = 0; x < dimension.getLargeur(); x++) 
     {
-        for (int y = 0; y < dimension.getHauteur(); ++y) 
+        for (int y = 0; y < dimension.getHauteur(); y++) 
         {
             int pixel= matrice[x][y] - 20;
             if (pixel < 0) {matrice[x][y] = 0;} 
@@ -286,9 +286,9 @@ ImageNG ImageNG::operator-(const ImageNG& other) const
 {
     ImageNG newImage(*this);
 
-    for (int x = 0; x < newImage.getDimension().getLargeur(); ++x) 
+    for (int x = 0; x < newImage.getDimension().getLargeur(); x++) 
     {
-        for (int y = 0; y < newImage.getDimension().getHauteur(); ++y) 
+        for (int y = 0; y < newImage.getDimension().getHauteur(); y++) 
         {
             int niveauGris = newImage.getPixel(x, y) - other.getPixel(x, y);
             if(niveauGris<0){ niveauGris=0;}
@@ -310,9 +310,9 @@ bool ImageNG::operator<(const ImageNG& other) const
     ImageNG newImage(*this);
     int L_Image=0, R_Image=0;
 
-    for (int x = 0; x < newImage.getDimension().getLargeur(); ++x) 
+    for (int x = 0; x < newImage.getDimension().getLargeur(); x++) 
     {
-        for (int y = 0; y < newImage.getDimension().getHauteur(); ++y) 
+        for (int y = 0; y < newImage.getDimension().getHauteur(); y++) 
         {
             L_Image += newImage.getPixel(x, y) ;
             R_Image += other.getPixel(x, y);
@@ -331,14 +331,14 @@ bool ImageNG::operator>(const ImageNG& other) const
         throw XYException("Dimension invalide !",'d');
     }
     else if((*this).getDimension().getLargeur() != other.getDimension().getLargeur()){throw XYException("Dimension invalide !",'x');}
-    else {throw XYException("Dimension invalide !",'y');}
+    else if((*this).getDimension().getHauteur() != other.getDimension().getHauteur()) {throw XYException("Dimension invalide !",'y');}
 
     ImageNG newImage(*this);
     int L_Image=0, R_Image=0;
 
-    for (int x = 0; x < newImage.getDimension().getLargeur(); ++x) 
+    for (int x = 0; x < newImage.getDimension().getLargeur(); x++) 
     {
-        for (int y = 0; y < newImage.getDimension().getHauteur(); ++y) 
+        for (int y = 0; y < newImage.getDimension().getHauteur(); y++) 
         {
             L_Image += newImage.getPixel(x, y) ;
             R_Image += other.getPixel(x, y);
@@ -356,14 +356,15 @@ bool ImageNG::operator==(const ImageNG& other) const
         throw XYException("Dimension invalide !",'d');
     }
     else if((*this).getDimension().getLargeur() != other.getDimension().getLargeur()){throw XYException("Dimension invalide !",'x');}
-    else {throw XYException("Dimension invalide !",'y');}
+    else if((*this).getDimension().getHauteur() != other.getDimension().getHauteur()) {throw XYException("Dimension invalide !",'y');}
+
 
     ImageNG newImage(*this);
     int L_Image=0, R_Image=0;
 
-    for (int x = 0; x < newImage.getDimension().getLargeur(); ++x) 
+    for (int x = 0; x < newImage.getDimension().getLargeur(); x++) 
     {
-        for (int y = 0; y < newImage.getDimension().getHauteur(); ++y) 
+        for (int y = 0; y < newImage.getDimension().getHauteur(); y++) 
         {
             L_Image += newImage.getPixel(x, y) ;
             R_Image += other.getPixel(x, y);
@@ -379,9 +380,9 @@ void ImageNG::Save(ofstream & fichier) const
     Image::Save(fichier);
 
 
-    for (int i = 0; i < dimension.getLargeur(); ++i)
+    for (int i = 0; i < dimension.getLargeur(); i++)
     {
-        for (int j = 0; j < dimension.getHauteur(); ++j)
+        for (int j = 0; j < dimension.getHauteur(); j++)
         {
             fichier.write((char*)(&matrice[i][j]), sizeof(int));
         }
@@ -401,9 +402,9 @@ void ImageNG::Load(ifstream & fichier)
   {
     Image::Load(fichier);
 
-    for (int i = 0; i < dimension.getLargeur(); ++i)
+    for (int i = 0; i < dimension.getLargeur(); i++)
     {
-        for (int j = 0; j < dimension.getHauteur(); ++j)
+        for (int j = 0; j < dimension.getHauteur(); j++)
         {
             fichier.read((char*)(&matrice[i][j]), sizeof(int));
         }
