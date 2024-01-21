@@ -607,6 +607,8 @@ void MainWindowPhotoShop::on_actionImage_selectionn_e_triggered()
     } 
   }
   dialogueMessage("Succès","Image supprimée");
+
+
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -648,14 +650,27 @@ void MainWindowPhotoShop::on_actionImage_par_id_triggered()
 void MainWindowPhotoShop::on_actionCouleur_TRUE_pour_ImageB_triggered()
 {
   // Etape 12 (TO DO)
+ int r, g, b;
 
+  //cout<<endl<<"avant couleur true: "<<ImageB::couleurTrue<<endl;
+  dialogueDemandeCouleur("choisisez une couleur pour 'Couleur TRUE' ", &r, &g, &b);
+  ImageB::couleurTrue.setRouge(r);
+  ImageB::couleurTrue.setVert(g);
+  ImageB::couleurTrue.setBleu(b);
+  //cout<<endl<<"apres modif couleur true: "<<ImageB::couleurTrue<<endl;
 }
-
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 void MainWindowPhotoShop::on_actionCouleur_FALSE_pour_imageB_triggered()
 {
   // Etape 12 (TO DO)
-
+  int r, g, b;
+  
+  //cout<<endl<<"avant modif couleur true: "<<ImageB::couleurFalse<<endl;
+  dialogueDemandeCouleur("Choisisez une couleur pour 'Couleur FALSE' ", &r, &g, &b);
+  ImageB::couleurFalse.setRouge(r);
+  ImageB::couleurFalse.setVert(g);
+  ImageB::couleurFalse.setBleu(b);
+  //cout<<endl<<"apres modif couleur False: "<<ImageB::couleurFalse<<endl;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -816,8 +831,10 @@ void MainWindowPhotoShop::on_pushButtonResultat_clicked()
 {
     // Etape 12 (TO DO)
 
-  // 1. Ajouter l’image « résultat » à la bibliothèque
+    //Ajouter l’image résultat à la bibli
     Image* resultat = PhotoShop::getInstance().resultat;
+    if (resultat == NULL) {dialogueErreur("Erreur", "Aucun résultat à ajouter à la bibliothèque");return;}  
+
     ImageNG* imgNG= dynamic_cast<ImageNG*>(resultat);
     ImageRGB* imgRGB= dynamic_cast<ImageRGB*>(resultat);
     ImageB* imgB= dynamic_cast<ImageB*>(resultat);
@@ -833,20 +850,15 @@ void MainWindowPhotoShop::on_pushButtonResultat_clicked()
     {
       PhotoShop::getInstance().ajouteImage(imgB);
     }
-    else
-    {
-      dialogueErreur("Erreur","Aucun résultat à ajouter à la bibliothèque");
-      return;
-    }
+    
 
-
-    // 2. MAJ tables des images
+    //MAJ tables des images
     videTableImages();
     Iterateur<Image*> it( *(PhotoShop::getInstance().getImages()));
     while(!it.end())
     {
         Image* img=(Image*)it;
-        if( dynamic_cast<ImageNG*>(img) !=NULL)
+        if( (dynamic_cast<ImageNG*>(img) ) !=NULL)
         {
           ajouteTupleTableImages(img->getId(),"NG",to_string(img->getDimension().getHauteur())+ 'x'+ to_string(img->getDimension().getLargeur()),img->getNom());
         }
@@ -861,11 +873,11 @@ void MainWindowPhotoShop::on_pushButtonResultat_clicked()
         it++;
     }
 
-    // 3. Remettre le pointeur resultat de PhotoShop à NULL
+    // resultat de PhotoShop à NULL
     PhotoShop::getInstance().resultat = NULL;
 
-    // 4. Effacer l’image « résultat » en appelant la méthode setImageXXX()
-    setImageNG(NULL);
+    //Effacer l’image « résultat » 
+    setImageNG("resultat");
 }
 
 
@@ -873,6 +885,10 @@ void MainWindowPhotoShop::on_pushButtonResultat_clicked()
 void MainWindowPhotoShop::on_pushButtonSupprimerResultat_clicked()
 {
     // Etape 12 (TO DO)
+    if(PhotoShop::getInstance().resultat!=NULL)
+    {
+      delete PhotoShop::getInstance().resultat;
+    }
     PhotoShop::getInstance().resultat=NULL;
     setImageNG("resultat");
 
@@ -882,6 +898,8 @@ void MainWindowPhotoShop::on_pushButtonSupprimerResultat_clicked()
 void MainWindowPhotoShop::on_pushButtonTraitement_clicked()
 {
     // Etape 12 (TO DO)
+    on_pushButtonSupprimerResultat_clicked();//supprimer le resultat si il existe
+    setResultatBoolean();
     
     if(getTraitementSelectionne().compare("")==0){dialogueErreur("Erreur","Merci de bien vouloir sélectionner un traitement svp"); return;}
     else
@@ -898,16 +916,16 @@ void MainWindowPhotoShop::on_pushButtonTraitement_clicked()
           {
             ImageNG* result=new ImageNG(*dynamic_cast<ImageNG*>(PhotoShop::getInstance().operande1));//contructeur par copie
             *result = *result + val;
-            setImageNG("resultat",result);
-            PhotoShop::getInstance().resultat=result; return;
+            PhotoShop::getInstance().resultat= result;
+            setImageNG("resultat",result); return;
           }
         }
         else if(getTraitementSelectionne().compare("Eclaircir (++)")==0)
         {
           ImageNG* result=new ImageNG(*dynamic_cast<ImageNG*>(PhotoShop::getInstance().operande1));//contructeur par copie
           result->operator++();
-          setImageNG("resultat",result);
-          PhotoShop::getInstance().resultat=result; return;
+          PhotoShop::getInstance().resultat=result;
+          setImageNG("resultat",result); return;
         }
         else if(getTraitementSelectionne().compare("Assombrir (- val)")==0)
         {
@@ -917,16 +935,16 @@ void MainWindowPhotoShop::on_pushButtonTraitement_clicked()
           {
             ImageNG* result=new ImageNG(*dynamic_cast<ImageNG*>(PhotoShop::getInstance().operande1));
             *result = *result - val;
-            setImageNG("resultat",result);
-            PhotoShop::getInstance().resultat=result; return ;  
+            PhotoShop::getInstance().resultat=result;
+            setImageNG("resultat",result); return ;  
           }
         }
         else if(getTraitementSelectionne().compare("Assombrir (--)")==0)
         {
           ImageNG* result=new ImageNG(*dynamic_cast<ImageNG*>(PhotoShop::getInstance().operande1));
           result->operator--();
-          setImageNG("resultat",result);
-          PhotoShop::getInstance().resultat=result; return;
+          PhotoShop::getInstance().resultat=result;
+          setImageNG("resultat",result); return;
         }
 
         else if(getTraitementSelectionne().compare("Seuillage")==0)
@@ -938,8 +956,8 @@ void MainWindowPhotoShop::on_pushButtonTraitement_clicked()
             ImageNG op1(ImageNG(*dynamic_cast<ImageNG*>(PhotoShop::getInstance().operande1)) );
             op1.setNom(op1.getNom());
             ImageB* result= new ImageB(Traitements::Seuillage(op1,seuil));
-            setImageB("resultat",result);
-            PhotoShop::getInstance().resultat=result; return;
+            PhotoShop::getInstance().resultat=result;
+            setImageB("resultat",result); return;
           }
         }
         else if(getTraitementSelectionne().compare("Filtre moyenneur")==0)
@@ -951,8 +969,8 @@ void MainWindowPhotoShop::on_pushButtonTraitement_clicked()
             ImageNG op1(ImageNG(*dynamic_cast<ImageNG*>(PhotoShop::getInstance().operande1)) );
             
             ImageNG* result= new ImageNG(Traitements::FiltreMoyenneur(op1,val));
-            setImageNG("resultat",result);
-            PhotoShop::getInstance().resultat=result; return;
+            PhotoShop::getInstance().resultat=result;
+            setImageNG("resultat",result); return;
           }
         }
         else if(getTraitementSelectionne().compare("Filtre médian")==0)
@@ -963,8 +981,8 @@ void MainWindowPhotoShop::on_pushButtonTraitement_clicked()
           {
             ImageNG op1(ImageNG(*dynamic_cast<ImageNG*>(PhotoShop::getInstance().operande1)) );
             ImageNG* result= new ImageNG(Traitements::FiltreMedian(op1,val));
-            setImageNG("resultat",result);
-            PhotoShop::getInstance().resultat=result; return;
+            PhotoShop::getInstance().resultat=result;
+            setImageNG("resultat",result); return;
           }
         }
         else if(getTraitementSelectionne().compare("Erosion")==0)
@@ -975,8 +993,8 @@ void MainWindowPhotoShop::on_pushButtonTraitement_clicked()
           {
             ImageNG op1(ImageNG(*dynamic_cast<ImageNG*>(PhotoShop::getInstance().operande1)) );
             ImageNG* result= new ImageNG(Traitements::Erosion(op1,val));
-            setImageNG("resultat",result);
-            PhotoShop::getInstance().resultat=result; return;
+            PhotoShop::getInstance().resultat=result;
+            setImageNG("resultat",result); return;
           }
         }
         else if(getTraitementSelectionne().compare("Dilatation")==0)
@@ -987,16 +1005,16 @@ void MainWindowPhotoShop::on_pushButtonTraitement_clicked()
           {
             ImageNG op( ImageNG(*dynamic_cast<ImageNG*>(PhotoShop::getInstance().operande1)) );
             ImageNG* result= new ImageNG(Traitements::Dilatation(op,val));
-            setImageNG("resultat",result);
-            PhotoShop::getInstance().resultat=result; return;
+            PhotoShop::getInstance().resultat=result;
+            setImageNG("resultat",result); return;
           }
         }
         else if(getTraitementSelectionne().compare("Négatif")==0)
         {
           ImageNG op1(ImageNG(*dynamic_cast<ImageNG*>(PhotoShop::getInstance().operande1)) );
           ImageNG* result= new ImageNG(Traitements::Negatif(op1));
-          setImageNG("resultat",result);
-          PhotoShop::getInstance().resultat=result; return;
+          PhotoShop::getInstance().resultat=result;
+          setImageNG("resultat",result); return;
         }
 
         if(PhotoShop::getInstance().operande2==NULL ){dialogueErreur("Erreur","Merci de bien vouloir sélectionner une image pour l'opérande 2"); return;}
@@ -1010,8 +1028,8 @@ void MainWindowPhotoShop::on_pushButtonTraitement_clicked()
             ImageNG* img1 = dynamic_cast<ImageNG*>(PhotoShop::getInstance().operande1);
             ImageNG* img2 = dynamic_cast<ImageNG*>(PhotoShop::getInstance().operande2);
             ImageNG* result = new ImageNG( (*img1) - (*img2) );
-            setImageNG("resultat",result);
             PhotoShop::getInstance().resultat=result;
+            setImageNG("resultat",result);
           }
           else if(getTraitementSelectionne().compare("Comparaison (==)")==0)
           {
