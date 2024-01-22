@@ -1,7 +1,12 @@
 #include <iostream>
 #include "PhotoShop.h"
 #include "Image.h"
+#include "ImageNG.h"
+#include "ImageRGB.h"
 #include "Iterateur.h"
+#include <fstream>
+#include <sstream>
+#include <string>
 using namespace std;
 
 int PhotoShop::numCourant = 1;
@@ -34,6 +39,11 @@ PhotoShop::~PhotoShop()
     #ifdef DEBUG
     cout << "Je suis le destructeur de PhotoShop" << endl<<endl;
     #endif
+}
+
+void PhotoShop::setNumCourant(int num)
+{
+    numCourant=num;
 }
 
 void PhotoShop::reset()
@@ -125,4 +135,49 @@ void PhotoShop::supprimeImageParId(int id)
         cpt++;
         it++;  // Passez à l'élément suivant
     }
+}
+
+int PhotoShop::importeImages(string nomFichier)
+{
+  ifstream fichier(nomFichier);
+  if (!fichier)
+  {
+    // impossible d'ouvrir le fichier
+    return 0;
+  }
+
+  string ligne;
+  int cpt = 0;
+
+  while (getline(fichier, ligne))
+  {
+    // separe les champs de la ligne ';'
+    stringstream ss(ligne);
+    string typeImage, nomFichierImage, nomImage;
+    getline(ss, typeImage, ';');
+    getline(ss, nomFichierImage, ';');
+    getline(ss, nomImage, ';');
+
+    // cree l'objet image en fonction du type
+    Image* image = NULL;
+    if (typeImage == "NG")
+    {
+      image = new ImageNG(nomFichierImage.c_str());
+      image->setNom(nomImage);
+    }
+    else if (typeImage == "RGB")
+    {
+      image = new ImageRGB(nomFichierImage.c_str());
+      image->setNom(nomImage);
+    }
+
+    // ajout l'image dans la liste(bibliothèque)
+    if (image != NULL)
+    {
+      instance.ajouteImage(image);
+      cpt++;
+    }
+  }
+
+  return cpt;
 }

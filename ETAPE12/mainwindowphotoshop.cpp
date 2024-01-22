@@ -650,26 +650,22 @@ void MainWindowPhotoShop::on_actionImage_par_id_triggered()
 void MainWindowPhotoShop::on_actionCouleur_TRUE_pour_ImageB_triggered()
 {
   // Etape 12 (TO DO)
- int r, g, b;
+ int r, v, b;
 
   //cout<<endl<<"avant couleur true: "<<ImageB::couleurTrue<<endl;
-  dialogueDemandeCouleur("choisisez une couleur pour 'Couleur TRUE' ", &r, &g, &b);
-  ImageB::couleurTrue.setRouge(r);
-  ImageB::couleurTrue.setVert(g);
-  ImageB::couleurTrue.setBleu(b);
+  dialogueDemandeCouleur("choisisez une couleur pour 'Couleur TRUE' ", &r, &v, &b);
+  ImageB::couleurTrue= Couleur(r,v,b);
   //cout<<endl<<"apres modif couleur true: "<<ImageB::couleurTrue<<endl;
 }
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 void MainWindowPhotoShop::on_actionCouleur_FALSE_pour_imageB_triggered()
 {
   // Etape 12 (TO DO)
-  int r, g, b;
+  int r, v, b;
   
   //cout<<endl<<"avant modif couleur true: "<<ImageB::couleurFalse<<endl;
-  dialogueDemandeCouleur("Choisisez une couleur pour 'Couleur FALSE' ", &r, &g, &b);
-  ImageB::couleurFalse.setRouge(r);
-  ImageB::couleurFalse.setVert(g);
-  ImageB::couleurFalse.setBleu(b);
+  dialogueDemandeCouleur("Choisisez une couleur pour 'Couleur FALSE' ", &r, &v, &b);
+  ImageB::couleurFalse= Couleur(r,v,b);
   //cout<<endl<<"apres modif couleur False: "<<ImageB::couleurFalse<<endl;
 }
 

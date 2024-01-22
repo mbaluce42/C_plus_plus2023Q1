@@ -650,26 +650,22 @@ void MainWindowPhotoShop::on_actionImage_par_id_triggered()
 void MainWindowPhotoShop::on_actionCouleur_TRUE_pour_ImageB_triggered()
 {
   // Etape 12 (TO DO)
- int r, g, b;
+ int r, v, b;
 
   //cout<<endl<<"avant couleur true: "<<ImageB::couleurTrue<<endl;
-  dialogueDemandeCouleur("choisisez une couleur pour 'Couleur TRUE' ", &r, &g, &b);
-  ImageB::couleurTrue.setRouge(r);
-  ImageB::couleurTrue.setVert(g);
-  ImageB::couleurTrue.setBleu(b);
+  dialogueDemandeCouleur("choisisez une couleur pour 'Couleur TRUE' ", &r, &v, &b);
+  ImageB::couleurTrue= Couleur(r,v,b);
   //cout<<endl<<"apres modif couleur true: "<<ImageB::couleurTrue<<endl;
 }
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 void MainWindowPhotoShop::on_actionCouleur_FALSE_pour_imageB_triggered()
 {
   // Etape 12 (TO DO)
-  int r, g, b;
+  int r, v, b;
   
   //cout<<endl<<"avant modif couleur true: "<<ImageB::couleurFalse<<endl;
-  dialogueDemandeCouleur("Choisisez une couleur pour 'Couleur FALSE' ", &r, &g, &b);
-  ImageB::couleurFalse.setRouge(r);
-  ImageB::couleurFalse.setVert(g);
-  ImageB::couleurFalse.setBleu(b);
+  dialogueDemandeCouleur("Choisisez une couleur pour 'Couleur FALSE' ", &r, &v, &b);
+  ImageB::couleurFalse= Couleur(r,v,b);
   //cout<<endl<<"apres modif couleur False: "<<ImageB::couleurFalse<<endl;
 }
 
@@ -677,7 +673,37 @@ void MainWindowPhotoShop::on_actionCouleur_FALSE_pour_imageB_triggered()
 void MainWindowPhotoShop::on_actionImporterCSV_triggered()
 {
   // Etape 13 (TO DO)
-
+  string nomF= dialogueDemandeFichierOuvrir("Quel est le nom du fichier CSV à importer ?");
+  if(nomF.compare("")==0){dialogueErreur("Erreur","TFQ ? tu n'as rien ecris !!!!!");return;}
+  else 
+  {
+    int nb= PhotoShop::getInstance().importeImages(nomF);
+    if(nb==0){dialogueErreur("Erreur","Aucune image importée");return;}
+    else
+    {
+      videTableImages();
+      Iterateur<Image*> it( *(PhotoShop::getInstance().getImages()));
+      while(!it.end())
+      {
+        Image* img=(Image*)it;
+        if(dynamic_cast<ImageRGB*>(img)!=NULL)
+        {
+          ajouteTupleTableImages(img->getId(),"RGB",to_string(img->getDimension().getHauteur())+ 'x'+ to_string(img->getDimension().getLargeur()),img->getNom());
+        }
+        else if( dynamic_cast<ImageNG*>(img) !=NULL)
+        {
+          ajouteTupleTableImages(img->getId(),"NG",to_string(img->getDimension().getHauteur())+ 'x'+ to_string(img->getDimension().getLargeur()),img->getNom());
+        } 
+        /*else //if(dynamic_cast<ImageB*>(img)!=NULL)
+        {
+          ajouteTupleTableImages(img->getId(),"B",to_string(img->getDimension().getHauteur())+ 'x'+ to_string(img->getDimension().getLargeur()),img->getNom());
+        } */
+        it++;
+      }
+      
+      dialogueMessage( "Succès", (to_string(nb) +" images importees").c_str() );
+    }
+  }
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -27,6 +27,8 @@ public:
     static PhotoShop& getInstance();
     ArrayList<Image*>* getImages();
 
+    void setNumCourant(int num);
+
     void reset();
     void ajouteImage(Image* pImage);
 
@@ -38,6 +40,8 @@ public:
 
     void supprimeImageParIndice(int ind);
     void supprimeImageParId(int id);
+
+    int importeImages(string nomFichier);
 };
 
 #endif 
