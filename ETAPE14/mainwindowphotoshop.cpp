@@ -710,7 +710,12 @@ void MainWindowPhotoShop::on_actionImporterCSV_triggered()
 void MainWindowPhotoShop::on_actionReset_triggered()
 {
   // Etape 14 (TO DO)
+  PhotoShop::getInstance().reset();
+  videTableImages();
+  setImageB("selection"); setImageB("operande1"); setImageB("operande2"); setImageB("resultat");
 
+  ImageB::couleurTrue= Couleur(Couleur::BLANC);
+  ImageB::couleurFalse= Couleur(Couleur::NOIR);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
