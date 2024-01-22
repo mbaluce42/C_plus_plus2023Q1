@@ -72,9 +72,28 @@ MainWindowPhotoShop::MainWindowPhotoShop(QWidget *parent) : QMainWindow(parent),
     // Etape 14 (TO DO)
     // Restauration bibliothèque via fichier de sauvegarde
 
-    // TESTS DEMOS A SUPPRIMER
-    //ajouteTupleTableImages(3,"NG","256x256","lena.bmp");
-    setResultatBoolean(1);
+    PhotoShop::getInstance().Load(); 
+    //PhotoShop::getInstance().afficheImages();
+    cout<<endl<<"nbr: "<<PhotoShop::getInstance().getImages()->getNombreElements()<<endl;
+    
+    Iterateur<Image*> it( *(PhotoShop::getInstance().getImages()));
+    while(!it.end())
+    {
+      Image* img=(Image*)it;
+      if(dynamic_cast<ImageRGB*>(img)!=NULL)
+      {
+        ajouteTupleTableImages(img->getId(),"RGB",to_string(img->getDimension().getHauteur())+ 'x'+ to_string(img->getDimension().getLargeur()),img->getNom());
+      }
+      else if( dynamic_cast<ImageNG*>(img) !=NULL)
+      {
+        ajouteTupleTableImages(img->getId(),"NG",to_string(img->getDimension().getHauteur())+ 'x'+ to_string(img->getDimension().getLargeur()),img->getNom());
+      }
+      else //if(dynamic_cast<ImageB*>(img)!=NULL)
+      {
+        ajouteTupleTableImages(img->getId(),"B",to_string(img->getDimension().getHauteur())+ 'x'+ to_string(img->getDimension().getLargeur()),img->getNom());
+      } 
+      it++;
+    }
 }
 
 MainWindowPhotoShop::~MainWindowPhotoShop()
@@ -388,6 +407,8 @@ void MainWindowPhotoShop::closeEvent(QCloseEvent *event)
   if (event == NULL) {} // pour éviter le warning à la compilation
   // Etape 14 (TO DO)
 
+  PhotoShop::getInstance().Save();
+
   QApplication::exit();
 }
 
@@ -397,6 +418,7 @@ void MainWindowPhotoShop::closeEvent(QCloseEvent *event)
 void MainWindowPhotoShop::on_actionQuitter_triggered()
 {
   // Etape 14 (TO DO)
+  PhotoShop::getInstance().Save();
 
   QApplication::exit();
 }

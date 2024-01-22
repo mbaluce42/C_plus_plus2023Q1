@@ -3,6 +3,7 @@
 #include "Image.h"
 #include "ImageNG.h"
 #include "ImageRGB.h"
+#include "ImageB.h"
 #include "Iterateur.h"
 #include <fstream>
 #include <sstream>
@@ -180,4 +181,102 @@ int PhotoShop::importeImages(string nomFichier)
   }
 
   return cpt;
+}
+
+void PhotoShop::Save()
+{
+    ofstream file("sauvegarde.dat", ios::binary);
+
+    file.write((char *)&numCourant, sizeof(int));
+
+   
+    ImageB::couleurTrue.Save(file);
+    ImageB::couleurFalse.Save(file);
+
+    int numImages = images.getNombreElements();
+    file.write((char *)&numImages, sizeof(int));
+
+    // Écrire chaque image
+    Iterateur<Image*> it(images);
+    while (!it.end())
+    {
+        Image* image = (Image*)it; // Obtenez l'image pointée par l'itérateur    
+
+        int type = 0;
+        if(dynamic_cast<ImageNG*>(image) != NULL)
+        {
+            type = 1;
+            file.write((char*)&type, sizeof(int));
+            ImageNG* imageNG = dynamic_cast<ImageNG*>(image);
+            imageNG->Save(file);
+        }
+        else if(dynamic_cast<ImageRGB*>(image)!= NULL)
+        {
+            type = 2;
+            file.write((char*)&type, sizeof(int));
+            ImageRGB* imageRGB = dynamic_cast<ImageRGB*>(image);
+            imageRGB->Save(file);
+        }
+        else if(dynamic_cast<ImageB*>(image)!= NULL)
+        {
+            type = 3;
+            file.write((char*)&type, sizeof(int));
+            ImageB* imageB = dynamic_cast<ImageB*>(image);
+            imageB->Save(file);
+        }
+        ++it;
+    }
+    file.close();
+    cout<< ">>>PhotoShop : Save <<<"<<endl;
+}
+
+void PhotoShop::Load()
+{
+    std::ifstream file("sauvegarde.dat", ios::binary);
+
+    if (file.peek() == std::ifstream::traits_type::eof())
+    {
+        // Le fichier est vide
+        cout << "Le fichier est vide." << endl;
+        return;
+    }
+
+    file.read((char*)&numCourant, sizeof(int));
+
+    ImageB::couleurTrue.Load(file);
+    ImageB::couleurFalse.Load(file);
+
+    int numImages;
+    file.read((char*)&numImages, sizeof(int));
+
+    // Lire chaque image
+    for(int i = 0; i < numImages; i++)
+    {
+        // Lire le type d'image
+        int type;
+        file.read((char*)&type, sizeof(int));
+
+        // Crée et lit l'image
+        Image* image;
+        ImageNG imgNG;  ImageRGB imgRGB;  ImageB imgB;
+        switch(type)
+        {
+            case 1:
+                imgNG.Load(file);
+                image = new ImageNG(imgNG);
+                break;
+            case 2:
+                imgRGB.Load(file);
+                image = new ImageRGB(imgRGB);
+                break;
+            case 3:
+                
+                imgB.Load(file);
+                image = new ImageB(imgB);
+                break;
+        }
+        images.insereElement(image);
+    }
+    file.close();
+    cout<< ">>>PhotoShop : Load <<<"<<endl;
 }

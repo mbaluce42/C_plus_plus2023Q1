@@ -42,6 +42,9 @@ public:
     void supprimeImageParId(int id);
 
     int importeImages(string nomFichier);
+
+    void Save();
+    void Load();
 };
 
 #endif 
